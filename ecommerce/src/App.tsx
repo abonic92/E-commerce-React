@@ -2,6 +2,7 @@ import './App.css'
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
+import Nav from './components/nav/Navbar';
 // import Login from './components/login/Login';
 // import Register from './components/login/Register';
 // import Categories from './components/categories/Categories';
@@ -14,6 +15,7 @@ import Home from './components/Home';
 const App: React.FC = () => {
   return (
     <BrowserRouter>
+        <Nav/>
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/login" element={Login} />

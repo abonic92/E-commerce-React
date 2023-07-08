@@ -1,33 +1,56 @@
-import { Link } from "react-router-dom"
-import "./nav.css"
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import "./Navbar.css";
 
-function Nav(){
-    return(
-        <nav>
-            <input type="checkbox" id="toggle" />
-            <div className="logo">
-                <Link to="/">
-                    <ul>
-                        <li><i className="fa-solid fa-bag-shopping"></i></li>
-                        <li>E-Commerce</li>
-                    </ul>
-                </Link>
-                
-            </div>
-                <ul className="list">
-                    <li><Link to={"/"}>Inicio</Link></li>
-                    <li><Link to={"/categories"}>Categorías</Link></li>
-                    <li><Link to={"/products"}>Productos</Link></li>
-                    <li><Link to={"/cart-detail"}><i className="fa-solid fa-cart-shopping"></i></Link></li>
-                </ul>
-                <label htmlFor="toggle" className="icon-bars">
-                    <div className="line"></div>
-                    <div className="line"></div>
-                    <div className="line"></div>                   
-                </label>            
-        </nav>
-        
-    )
-}
+const Nav: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
 
-export default Nav
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
+  const renderAuthLinks = () => {
+    if (loggedIn) {
+      return (
+        <>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/cart/CartDetail">Carrito</Link>
+          </li>
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/cart/CartDetail">Carrito</Link>
+          </li>
+          <li>
+            <Link to="/login/Login">Login</Link>
+          </li>
+        </>
+      );
+    }
+  };
+
+  return (
+    <nav className="navbar navbar-dark">
+      <Link to="/">
+        <div className="logo">
+          <img src="/Latienda.png" alt="Logo" className="logo-img" />
+        </div>
+      </Link>
+      <ul>{renderAuthLinks()}</ul>
+    </nav>
+  );
+};
+
+export default Nav;
