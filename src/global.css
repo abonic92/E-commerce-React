@@ -1,0 +1,15 @@
+#root {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  --primary-color: crimson;
+
+}
+
+body {
+  background: rgb(69,0,0);
+  background: linear-gradient(90deg, rgba(69,0,0,1) 0%, rgba(153,0,0,1) 100%);
+  color: whitesmoke; 
+}
