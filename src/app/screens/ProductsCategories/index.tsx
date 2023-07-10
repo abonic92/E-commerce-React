@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from 'react-query';
-import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 import styles from './styles.module.css';
+import Loader from "../../components/Loader";
 
 interface RouteParams {
   categoryId: string;
@@ -11,7 +11,7 @@ interface RouteParams {
 }
 
 interface Category {
-  id: number;
+  id: number ;
   name: string;
   image: string;
   createdAt: string;
@@ -31,6 +31,11 @@ interface Product {
 
 const fetchProductsByCategory = async (categoryId: string) => {
   const response = await fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}/products`);
+  if (!categoryId) {
+    const errorMessage = 'Category ID is undefined';
+    throw { message: errorMessage };
+  }
+
   if (!response.ok) {
     const errorMessage = 'Failed to fetch categories';
     throw { message: errorMessage };
@@ -41,7 +46,7 @@ const fetchProductsByCategory = async (categoryId: string) => {
 
 const ProductsByCategory: React.FC = () => {
   const { categoryId } = useParams<RouteParams>();
-  const { data, isLoading, error } = useQuery<Product[]>(['products', categoryId], () => fetchProductsByCategory(categoryId));
+  const { data, isLoading, error } = useQuery<Product[]>(['products', categoryId || ''], () => fetchProductsByCategory(categoryId || ''));
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 5;

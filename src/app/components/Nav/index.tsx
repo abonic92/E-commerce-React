@@ -7,7 +7,7 @@ return (
   <nav className={styles.navbar}>
     <Link to="/">
       <div className={styles.logo}>
-        <img src="/Logo.png" alt="Logo" className={styles.logoImg} />
+        <img src="Logo.png" alt="Logo" className={styles.logoImg} />
       </div>
     </Link>
     <ul>

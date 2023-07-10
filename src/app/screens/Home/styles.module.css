@@ -30,10 +30,22 @@
   }
    */
 
-
    .logo {
     width: 100%;
     max-width: 400px;
     height: auto;
-    transition: transform 0.3s ease;
+    transition: transform 2s ease;
+  }
+  
+  /* Efecto de rotación al posicionarse con el puntero */
+  .logo:hover {
+    transform: rotateY(360deg);
+  }
+  
+ 
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #ffa0a0);
+  }
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #c37171);
   }
