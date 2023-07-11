@@ -13,11 +13,12 @@ interface Category {
   updatedAt: string;
 }
 
-const App = () => {
+const Categories = () => {
   const { data, isLoading, error } = useQuery<Category[]>('categories', async () => {
     const response = await fetch('https://api.escuelajs.co/api/v1/categories');
     if (!response.ok) {
-      throw new Error('Failed to fetch categories');
+      const errorMessage = "Failed to fetch categories";
+      throw { message: errorMessage };
     }
     const data = await response.json();
     return data;
@@ -28,13 +29,14 @@ const App = () => {
   }
 
   if (error) {
-    return <Error message={error.message} />;  }
+    return <Error message={(error as Error).message} />; 
+   }
 
   return (
     <div className={styles.categoryList}>
       <h2>Categories</h2>
       <div className={styles.categoryCards}>
-        {data.map((category) => (
+        {data?.map((category) => (
           <div key={category.id} className={styles.categoryCard}>
             <Link to={`/category/${category.id}/products`}>
               <img src={category.image} alt={category.name} />
@@ -47,4 +49,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Categories;

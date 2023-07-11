@@ -4,8 +4,7 @@ interface ErrorProps {
   message: string;
 }
 
-const Error: React.FC<ErrorProps> = (props) => {
-  const { message } = props;
+const Error: React.FC<ErrorProps> = ({ message }) => {
   return (
     <div>
       <h2>Error</h2>
