@@ -1,11 +1,10 @@
-import React from 'react';
 import styles from "./styles.module.css";
 
 const Loader = () => {
   return (
     <>
     <div>
-      <img src='/loaderr.gif' alt="Loader" className={styles.logo} />
+      <img src='./loaderr.gif' alt="Loader" className={styles.loader} />
     </div>
     <span>Loading...</span>
     </>
