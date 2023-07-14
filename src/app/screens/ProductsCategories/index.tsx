@@ -4,6 +4,8 @@ import { useQuery } from 'react-query';
 import Error from '../../components/Error';
 import styles from './styles.module.css';
 import Loader from "../../components/Loader";
+import CardList from "../../components/CardList";
+import CardChildren from "../../components/CardChildren";
 
 interface RouteParams {
   categoryId: string;
@@ -72,36 +74,46 @@ const ProductsByCategory: React.FC = () => {
   return (
     <div className={styles.categoryList}>
       <h2>Products by Category: {categoryId}</h2>
-      <div className={styles.categoryCards}>
-        {currentProducts?.map((product) => (
-          <div key={product.id} className={styles.categoryCard}>
-            {product.images.length > 0 && (
-              <img src={product.images[0]} alt={product.title} className={styles.cardImage} />
-            )}
-            <h3>{product.title}</h3>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-          </div>
-        ))}
-      </div>
-      <div className={styles.pagination}>
-        {/* Pagination */}
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={styles.paginationButton}
-        >
-          {"<"}
-        </button>
-        <span className={styles.paginationPage}>Page: {currentPage}</span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={indexOfLastProduct >= (data?.length || 0)}
-          className={styles.paginationButton}
-        >
-          {">"}
-        </button>
-      </div>
+      {currentProducts && currentProducts.length > 0 ? (
+        <>
+          <CardList>
+            {currentProducts.map((product) => (
+              <div key={product.id} className={styles.categoryCard}>
+                <CardChildren
+                  image={product.images[0]}
+                  title={product.title}
+                  price={product.price}
+                  description={product.description}
+                />
+              </div>
+            ))}
+          </CardList>
+
+
+        <div className={styles.pagination}>
+          {/* Pagination */}
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={styles.paginationButton}
+          >
+            {"<"}
+          </button>
+          <span className={styles.paginationPage}>Page: {currentPage}</span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={indexOfLastProduct >= (data?.length || 0)}
+            className={styles.paginationButton}
+          >
+            {">"}
+          </button>
+        </div>
+      </>
+      ) : (
+        <h1 className={styles.noProductsMessage}>
+         Los sentimos, nos quedamos sin stock de productos para la categoría seleccionada.
+        </h1>
+      )}
     </div>
   );
 };

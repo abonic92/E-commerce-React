@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import Loader from '../../components/Loader';
 import Error from '../../components/Error';
+import CardList from "../../components/CardList";
+import CardChildren from "../../components/CardChildren";
 
 
 interface Category {
@@ -35,16 +37,15 @@ const Categories = () => {
   return (
     <div className={styles.categoryList}>
       <h2>Categories</h2>
-      <div className={styles.categoryCards}>
+      <CardList>
         {data?.map((category) => (
-          <div key={category.id} className={styles.categoryCard}>
+          <div key={category.id}>
             <Link to={`/category/${category.id}/products`}>
-              <img src={category.image} alt={category.name} />
-              <h3>{category.name}</h3>
+              <CardChildren image={category.image} title={category.name} />
             </Link>
           </div>
         ))}
-      </div>
+      </CardList>
     </div>
   );
 };
