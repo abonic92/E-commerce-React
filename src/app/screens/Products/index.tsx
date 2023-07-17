@@ -5,23 +5,24 @@ import Error from "../../components/Error";
 import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
+import { Category, Product } from "../Interface";
 
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-}
+// interface Category {
+//   id: number;
+//   name: string;
+//   image: string;
+// }
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  images: string[];
-  createdAt: string;
-  updatedAt: string;
-  category: Category;
-}
+// interface Product {
+//   id: number;
+//   title: string;
+//   price: number;
+//   description: string;
+//   images: string[];
+//   createdAt: string;
+//   updatedAt: string;
+//   category: Category;
+// }
 
 const fetchCategories = async () => {
   const response = await fetch("https://api.escuelajs.co/api/v1/categories");

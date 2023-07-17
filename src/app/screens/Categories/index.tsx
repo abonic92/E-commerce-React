@@ -5,15 +5,16 @@ import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
+import { Category } from "../Interface";
 
 
-interface Category {
-  id: number;
-  name: string;
-  image: string;
-  creationAt: string;
-  updatedAt: string;
-}
+// interface Category {
+//   id: number;
+//   name: string;
+//   image: string;
+//   creationAt: string;
+//   updatedAt: string;
+// }
 
 const Categories = () => {
   const { data, isLoading, error } = useQuery<Category[]>('categories', async () => {
