@@ -6,31 +6,8 @@ import styles from './styles.module.css';
 import Loader from "../../components/Loader";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
-import { RouteParams, Category , Product  } from "../Interface";
+import { RouteParams,  Product  } from "../Interface";
 
-// interface RouteParams {
-//   categoryId: string;
-//   [key: string]: string | undefined;
-// }
-
-// interface Category {
-//   id: number ;
-//   name: string;
-//   image: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// interface Product {
-//   id: number;
-//   title: string;
-//   price: number;
-//   description: string;
-//   images: string[];
-//   createdAt: string;
-//   updatedAt: string;
-//   category: Category;
-// }
 
 const fetchProductsByCategory = async (categoryId: string) => {
   const response = await fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}/products`);

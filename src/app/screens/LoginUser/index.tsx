@@ -5,10 +5,7 @@ import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
 import { LoginUserProps } from "../Interface";
 
-// interface LoginUserProps {
-//   setLoggedIn: (loggedIn: boolean) => void;
-//   setUserName: (userName: string) => void;
-// }
+
 
 const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn, setUserName }) => {
   const [email, setEmail] = useState("");

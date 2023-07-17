@@ -8,14 +8,6 @@ import CardChildren from "../../components/CardChildren";
 import { Category } from "../Interface";
 
 
-// interface Category {
-//   id: number;
-//   name: string;
-//   image: string;
-//   creationAt: string;
-//   updatedAt: string;
-// }
-
 const Categories = () => {
   const { data, isLoading, error } = useQuery<Category[]>('categories', async () => {
     const response = await fetch('https://api.escuelajs.co/api/v1/categories');
