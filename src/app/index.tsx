@@ -10,6 +10,9 @@ import Login from "./screens/LoginUser";
 import Register from "./screens/RegisterUser";
 import { useState } from "react";
 import { PrivateRoute } from "./components/PrivateRoute";
+import AdminPage from "./screens/Admin";
+import { AdminRoute } from './components/AdminRoute';
+
 
 const queryClient = new QueryClient();
 
@@ -23,23 +26,33 @@ function App() {
     localStorage.setItem('loggedIn', loggedIn ? 'true' : 'false');
   };
   
-  const logout = () => {
+  const handleLogout = () => {
     setLoggedIn(false);
     // setUserName("");
     localStorage.removeItem("loggedIn"); // cerrar sesión
     localStorage.removeItem("accessToken"); // Remueve el token del local storage al cerrar sesión
+    localStorage.removeItem("userData"); //Remueve los datos del usuario
   };
 
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
       <Routes>
-          <Route element={<Layout loggedIn={loggedIn} setLoggedIn={handleSetLoggedIn} userName={userName} logout={logout} />}>
+          <Route element={<Layout loggedIn={loggedIn} userName={userName} handleLogout={handleLogout} />}>
 
             <Route path="/" element={<Home />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
+            
+            <Route
+              path="/adminpage"
+              element={
+                <AdminRoute>
+                  <AdminPage />
+                </AdminRoute>
+              }
+            />
             <Route
               path="/login"
               element={

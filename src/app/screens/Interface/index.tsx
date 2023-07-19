@@ -32,6 +32,14 @@
     setUserName: (userName: string) => void;
   }
 
+
+  interface UserData {
+    id: number;
+    email: string;
+    name: string;
+    role: string;
+  }
+
   
-  export { Category, Product, LoginUserProps, RouteParams };
+  export { Category, Product, LoginUserProps, RouteParams, UserData };
   

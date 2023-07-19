@@ -3,15 +3,14 @@ import Nav from "../Nav";
 
 interface LayoutProps {
   loggedIn: boolean;
-  setLoggedIn: (loggedIn: boolean) => void;
   userName: string;
-  logout: () => void;
+  handleLogout: () => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ loggedIn, setLoggedIn, userName, logout }) => {
+const Layout: React.FC<LayoutProps> = ({ loggedIn, userName, handleLogout }) => {
   return (
     <>
-      <Nav loggedIn={loggedIn} userName={userName} logout={logout} />
+      <Nav loggedIn={loggedIn} userName={userName} handleLogout={handleLogout} />
       <Outlet />
     </>
   );

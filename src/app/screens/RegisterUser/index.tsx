@@ -9,7 +9,7 @@ interface RegisterUserProps {
   setUserName: (userName: string) => void;
 }
 
-const RegisterUser: React.FC<RegisterUserProps> = ({ setLoggedIn, setUserName }) => {
+const RegisterUser: React.FC<RegisterUserProps> = ({ setLoggedIn }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
