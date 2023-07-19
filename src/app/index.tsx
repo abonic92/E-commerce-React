@@ -10,8 +10,10 @@ import Login from "./screens/LoginUser";
 import Register from "./screens/RegisterUser";
 import { useState } from "react";
 import { PrivateRoute } from "./components/PrivateRoute";
-import AdminPage from "./screens/Admin";
+
 import { AdminRoute } from './components/AdminRoute';
+import CreateCategoryForm from "./screens/CreateCategory";
+
 
 
 const queryClient = new QueryClient();
@@ -46,10 +48,10 @@ function App() {
             <Route path="/products" element={<Products />} />
             
             <Route
-              path="/adminpage"
+              path="/producto/create"
               element={
                 <AdminRoute>
-                  <AdminPage />
+                  <CreateCategoryForm />
                 </AdminRoute>
               }
             />

@@ -1,15 +1,21 @@
 import React from "react";
-import Dashboard from "./dashboard";
+import styles from "./styles.module.css";
+import Dash from "../../components/Dash";
 
 const AdminPage: React.FC = () => {
   return (
-    <div>
-      <h2>Welcome, Admin!</h2>
-      <div className="adminContainer">
-        <Dashboard />
-        {/* Contenido específico para la página de administrador */}
-      </div>
+    <>
+    <div className={styles.pageContainer}>
+        <Dash />
+
+        {/* Aca el contenido */}
+
+        <p>A ver</p>
+
+
+        
     </div>
+    </>
   );
 };
 
