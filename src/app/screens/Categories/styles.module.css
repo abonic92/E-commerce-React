@@ -2,7 +2,7 @@
     margin: 20px;
   }
   
-  .categoryCards {
+  /* .categoryCards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
@@ -26,6 +26,6 @@
   .categoryCard h3 {
     margin-top: 10px;
     font-size: 18px;
-    /* color: #333; */
+    color: #333;
   }
-  
+   */

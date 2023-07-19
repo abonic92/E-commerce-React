@@ -1,0 +1,48 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: rgb(69,0,0);
+  background: linear-gradient(360deg, rgba(69,0,0,1) 0%, rgba(153,0,0,1) 100%);
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgb(0, 0, 0);
+  height: 90%; /* Añade esta propiedad para que todas las tarjetas tengan la misma altura */
+}
+
+.cardImage {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+/* .cardImage:hover {
+  transform: scale(1.05);
+} */
+
+.card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+/* Es el código de movimiento copado
+.cardImageContainer {
+  width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cardImageContainer:hover .cardImage {
+  transform: scale(1.2);
+} */

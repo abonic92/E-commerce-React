@@ -1,10 +1,10 @@
-import styles from "./styles.module.css";
+import lolo from './lolo.svg'
 
 const Loader = () => {
   return (
     <>
     <div>
-      <img src='./loaderr.gif' alt="Loader" className={styles.loader} />
+      <img src={lolo} alt="Loader"/>
     </div>
     <span>Loading...</span>
     </>
