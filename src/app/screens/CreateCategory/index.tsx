@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
+import styles from "./styles.module.css";
+import Dash from "../../components/Dash";
 
 interface Category {
   name: string;
@@ -52,6 +54,9 @@ const CreateCategoryForm: React.FC = () => {
   };
 
   return (
+    <>
+    <div className={styles.pageContainer}>
+        <Dash />
     <form onSubmit={handleSubmit}>
       {error && <p>{error}</p>}
       {success && <p>{success}</p>}
@@ -75,6 +80,8 @@ const CreateCategoryForm: React.FC = () => {
       </div>
       <button type="submit">Create Category</button>
     </form>
+    </div>
+    </>
   );
 };
 

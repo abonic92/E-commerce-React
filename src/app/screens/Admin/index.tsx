@@ -8,7 +8,7 @@ const AdminPage: React.FC = () => {
     <div className={styles.pageContainer}>
         <Dash />
 
-        {/* Aca el contenido */}
+        
 
         <p>A ver</p>
 
