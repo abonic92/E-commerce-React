@@ -7,11 +7,8 @@ const Dash: React.FC = () => {
   return (
     <>
     <div className={styles.filtersContainer}>
-            <h3 className={styles.filterTitle}>Opciones </h3>
-            <p> HOLA </p>
-            <p> HOLA </p>
-            <p> HOLA </p>
-            <p> HOLA </p>
+            <h1 className={styles.filterTitle}>Opciones </h1>
+
             <li>
                 <Link to="/producto/create">Agregar Producto </Link>
             </li>

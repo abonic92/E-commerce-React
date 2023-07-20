@@ -1,20 +1,55 @@
-.layout {
-  max-width: 1366px;
+.pageContainer {
+  display: flex;
   height: 100vh;
-  margin: 0 auto;
+}
+
+.layout {
+  max-width: auto;
+  height: 100vh;
+  margin: 0;
   display: flex;
   overflow: hidden;
 }
 
 .sidebar {
-  background-color: black;
-  width: 250px;
-  flex-shrink: 0; /* Evitamos que el sidebar se encoja y mantenga su ancho */
-  overflow-y: auto; /* Habilitamos el desplazamiento vertical del sidebar */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #292929;
+  color: #ffffff;
+  width: 200px;
 }
 
 .body {
-  flex-grow: 1; /* Permitimos que el body crezca y ocupe el espacio restante */
-  overflow-y: auto; /* Habilitamos el desplazamiento vertical del body */
+  flex-grow: 1;
+  overflow-y: auto;
   padding: 8px;
+}
+
+.productList {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+    }
+    
+    .filtersContainer {
+      width: 100%;
+    }
+  }
+  .sidebar{
+    width: 100%;
+  }
+  
 }
