@@ -13,6 +13,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 
 import { AdminRoute } from './components/AdminRoute';
 import CreateCategoryForm from "./screens/CreateCategory";
+import AdminPage from "./screens/Admin";
 
 
 
@@ -47,6 +48,15 @@ function App() {
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
             
+
+            <Route
+              path="/adminpage"
+              element={
+                <AdminRoute>
+                  <AdminPage />
+                </AdminRoute>
+              }
+            />
             <Route
               path="/producto/create"
               element={

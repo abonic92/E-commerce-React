@@ -1,4 +1,20 @@
-.pageContainer {
-  display: flex;
+.layout {
+  max-width: 1366px;
   height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: black;
+  width: 250px;
+  flex-shrink: 0; /* Evitamos que el sidebar se encoja y mantenga su ancho */
+  overflow-y: auto; /* Habilitamos el desplazamiento vertical del sidebar */
+}
+
+.body {
+  flex-grow: 1; /* Permitimos que el body crezca y ocupe el espacio restante */
+  overflow-y: auto; /* Habilitamos el desplazamiento vertical del body */
+  padding: 8px;
 }
