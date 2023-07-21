@@ -8,5 +8,5 @@ export const AdminRoute = ({ children }) => {
   const userData: UserData | null = storedUserData ? JSON.parse(storedUserData) : null;
   const isAdmin = userData?.role === 'admin'
 
-  return isAdmin && loggedIn ? children : <Navigate to="/adminpage" replace />;
+  return isAdmin && loggedIn ? children : <Navigate to="/" replace />;
 };
