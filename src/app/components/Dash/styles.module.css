@@ -77,3 +77,37 @@
     }
   }
    */
+
+   /* styles.module.css */
+
+/* styles.module.css */
+
+/* styles.module.css */
+
+/* Contenedor para los elementos Link */
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Estilo base para los elementos Link */
+.linkItem {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 10px 8px;
+  background-color: #bd0000a8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, transform 0.2s;
+  max-width: 300px; /* Establecer una anchura máxima para el diseño responsive */
+  width: 100%; /* Para que ocupe el 100% del contenedor */
+}
+
+/* Estilo al pasar el mouse por encima */
+.linkItem:hover {
+  background-color: #02990a;
+  transform: scale(1.05);
+}

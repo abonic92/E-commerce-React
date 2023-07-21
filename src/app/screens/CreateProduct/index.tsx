@@ -1,22 +1,29 @@
 import React, { useState } from "react";
+import { useMutation } from "react-query";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
-import { useMutation } from "react-query";
-import Categories from "../Categories";
 
-interface Category {
-  name: string;
-  image: string;
+
+
+interface Product {
+  title: string;
+  price: number;
+  description: string;
+  categoryId: number;
+  images: string[];
 }
 
 const CreateProduct: React.FC = () => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
+  const [categoryId, setCategoryId] = useState(1);
+  const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const createCategoryMutation = useMutation((data: Category) => {
-    return fetch("https://api.escuelajs.co/api/v1/categories/", {
+  const createProductMutation = useMutation((data: Product) => {
+    return fetch("https://api.escuelajs.co/api/v1/products/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +38,8 @@ const CreateProduct: React.FC = () => {
         return res.json();
       })
       .then((resData) => {
-        setSuccess("Category created successfully");
-        // Aquí puedes manejar la respuesta del servidor
+        setSuccess("Product created successfully");
+        // Here you can handle the server response
         console.log(resData);
       })
       .catch((error) => {
@@ -45,17 +52,18 @@ const CreateProduct: React.FC = () => {
     setError("");
     setSuccess("");
 
-    // Validar los campos antes de enviar la solicitud
-    if (!name || !image) {
+    // Validate the fields before sending the request
+    if (!title || !price || !description || !categoryId || images.length === 0) {
       setError("Please fill in all the fields");
       return;
     }
 
-    createCategoryMutation.mutate({ name, image });
+    createProductMutation.mutate({ title, price, description, categoryId, images });
   };
 
+
   return (
-    <>
+  <>
     
     <section  className= {styles.layout}>
       
@@ -64,55 +72,71 @@ const CreateProduct: React.FC = () => {
         <Dash />
       </div>
 
-      <div className={styles.productList}>
-        <div  className= {styles.body}>
-        
-            
-          <h1> "Bienvenido a la sección de Dashboard para administradores"</h1>
-          <>
-
-              <form onSubmit={handleSubmit}>
-                {error && <p>{error}</p>}
-                {success && <p>{success}</p>}
-                <div>
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="image">Image URL:</label>
-                  <input
-                    type="text"
-                    id="image"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                  />
-                </div>
-                <button type="submit">Create Category</button>
-              </form>
-              <Categories></Categories>
-
-
-              </>
-
-        </div>
-       
-
-      <div className={styles.logoSection}>
-          {/* Aquí puedes agregar tu logo */}
-          {/* <img src="ruta_del_logo.png" alt="Logo de la empresa" /> */}
-      </div>
-      
-      </div>
+        <div className={styles.productList}>
+          <div  className= {styles.body}>
+          
+              
+            <h1> "Creacion de Productos"</h1>
   
-     
+                    <form onSubmit={handleSubmit}>
+                      {error && <p>{error}</p>}
+                      {success && <p>{success}</p>}
+                      <div>
+                        <label htmlFor="title">Title:</label>
+                        <input
+                          type="text"
+                          id="title"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="price">Price:</label>
+                        <input
+                          type="number"
+                          id="price"
+                          value={price}
+                          onChange={(e) => setPrice(parseFloat(e.target.value))}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="description">Description:</label>
+                        <textarea
+                          id="description"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="categoryId">Category ID:</label>
+                        <input
+                          type="number"
+                          id="categoryId"
+                          value={categoryId}
+                          onChange={(e) => setCategoryId(parseInt(e.target.value))}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="images">Images (separated by commas):</label>
+                        <input
+                          type="text"
+                          id="images"
+                          value={images.join(", ")}
+                          onChange={(e) => setImages(e.target.value.split(",").map((url) => url.trim()))}
+                        />
+                      </div>
+                      <button type="submit">Create Product</button>
+                    </form>
+      
+
+
+          </div>
+        </div>
+  
     </section>
-    </>
+  </>
   );
+  
 };
 
 export default CreateProduct;

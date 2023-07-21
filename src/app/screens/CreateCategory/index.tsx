@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useMutation } from "react-query";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
+import { useMutation } from "react-query";
+import Categories from "../Categories";
 
 interface Category {
   name: string;
   image: string;
 }
 
-const CreateCategoryForm: React.FC = () => {
+const CreateCategory: React.FC = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
@@ -55,34 +56,66 @@ const CreateCategoryForm: React.FC = () => {
 
   return (
     <>
-    <div className={styles.pageContainer}>
+    
+    <section  className= {styles.layout}>
+      
+      
+      <div  className={styles.sidebar}> 
         <Dash />
-    <form onSubmit={handleSubmit}>
-      {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
       </div>
-      <div>
-        <label htmlFor="image">Image URL:</label>
-        <input
-          type="text"
-          id="image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
+
+      <div className={styles.productList}>
+        <div  className= {styles.body}>
+        
+            
+          <h1> "Creación de Categorias"</h1>
+          <>
+
+              <form onSubmit={handleSubmit}>
+                {error && <p>{error}</p>}
+                {success && <p>{success}</p>}
+                <div>
+                  <label htmlFor="name">Name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="image">Image URL:</label>
+                  <input
+                    type="text"
+                    id="image"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  />
+                </div>
+                <button type="submit">Create Category</button>
+              </form>
+              <Categories></Categories>
+
+
+              </>
+
+        </div>
+       
+
+      <div className={styles.logoSection}>
+          {/* Aquí puedes agregar tu logo */}
+          {/* <img src="ruta_del_logo.png" alt="Logo de la empresa" /> */}
       </div>
-      <button type="submit">Create Category</button>
-    </form>
-    </div>
+      
+      </div>
+  
+     
+    </section>
     </>
   );
 };
 
-export default CreateCategoryForm;
+export default CreateCategory;
+
+
+
