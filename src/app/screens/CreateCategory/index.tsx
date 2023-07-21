@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
 import { useMutation } from "react-query";
+import Categories from "../Categories";
 
 interface Category {
   name: string;
@@ -93,10 +94,11 @@ const CreateCategory: React.FC = () => {
                 </div>
                 <button className={styles.boton}type="submit">Create Category</button>
               </form>
+              
              
               </div>
               </>
-
+              <Categories></Categories>
         </div>
        
      
