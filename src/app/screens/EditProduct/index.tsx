@@ -21,6 +21,7 @@ const EditProduct: React.FC = () => {
   };
 
   return (
+    
     <div>
       <h1>Edit Product</h1>
       {error && <p>Error: {error}</p>}

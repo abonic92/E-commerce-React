@@ -138,8 +138,8 @@ const EditCategory: React.FC = () => {
       >
         <h2>¿Estás seguro que deseas eliminar esta categoría?</h2>
         <div className="confirmationButtons">
-          <button onClick={handleConfirmation}>ACEPTAR</button>
-          <button onClick={handleConfirmationModalClose}>CANCELAR</button>
+          <button className="customButtonAceptar" onClick={handleConfirmation}>ACEPTAR</button>
+          <button className="customButtonEliminar" onClick={handleConfirmationModalClose}>CANCELAR</button>
         </div>
       </Modal>
 
