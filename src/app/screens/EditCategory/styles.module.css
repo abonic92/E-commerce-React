@@ -86,3 +86,25 @@
   background-color: #08c4a8;
 }
 
+
+
+.deleteButton{
+    background-color: rgb(226, 42, 42);
+  }
+
+.deleteButton:hover{
+    background-color: rgb(253, 0, 0);
+  }
+
+  .editButton{
+    background-color: #0f9c6bc8;
+  }
+
+.editButton:hover{
+    background-color: #08c4a8;
+  }
+
+.withButton {
+    padding: 2px;
+    margin-block-start: 1rem;
+}
