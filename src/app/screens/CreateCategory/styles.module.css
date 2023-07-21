@@ -72,7 +72,7 @@
 }
 
 
-button {
+.boton {
   padding: 10px 20px;
   background-color: #0f9c6bc8;
   color: #fff;
@@ -82,6 +82,7 @@ button {
   align-self: center;
 }
 
-button:hover {
-  background-color: #08c492;
+.boton:hover {
+  background-color: #08c4a8;
 }
+

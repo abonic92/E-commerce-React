@@ -91,7 +91,7 @@ const CreateCategory: React.FC = () => {
                     onChange={(e) => setImage(e.target.value)}
                   />
                 </div>
-                <button type="submit">Create Category</button>
+                <button className={styles.boton}type="submit">Create Category</button>
               </form>
              
               </div>

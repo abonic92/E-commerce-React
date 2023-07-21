@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 interface Product {
   title: string;
@@ -19,6 +24,21 @@ const CreateProduct: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("https://api.escuelajs.co/api/v1/categories");
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      setError("Error al obtener las categorías");
+    }
+  };
 
   const createProductMutation = useMutation((data: Product) => {
     return fetch("https://api.escuelajs.co/api/v1/products/", {
@@ -30,14 +50,13 @@ const CreateProduct: React.FC = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          setError(res.statusText);
+          setError("Error creating product");
           throw new Error(res.statusText);
         }
         return res.json();
       })
       .then((resData) => {
         setSuccess("Product created successfully");
-        // Here you can handle the server response
         console.log(resData);
       })
       .catch((error) => {
@@ -60,83 +79,77 @@ const CreateProduct: React.FC = () => {
   };
 
   return (
-  <>
- 
-    <section  className= {styles.layout}>
-      
-      
-      <div  className={styles.sidebar}> 
-        <Dash />
-      </div>
-
+    <>
+      <section className={styles.layout}>
+        <div className={styles.sidebar}>
+          <Dash />
+        </div>
         <div className={styles.productList}>
-          <div  className= {styles.body}>
-          
-              
-            <h1> "Creacion de Productos"</h1>
+          <div className={styles.body}>
+            <h1>Creacion de Productos</h1>
             <div className={styles.container}>
-                    <form  className={styles.form} onSubmit={handleSubmit}>
-                      {error && <p>{error}</p>}
-                      {success && <p>{success}</p>}
-                      <div>
-                        <label htmlFor="title">Title:</label>
-                        <input
-                          type="text"
-                          id="title"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="price">Price:</label>
-                        <input
-                          type="number"
-                          id="price"
-                          value={price}
-                          onChange={(e) => setPrice(parseFloat(e.target.value))}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="description">Description:</label>
-                        <textarea
-                          id="description"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="categoryId">Category ID:</label>
-                        <input
-                          type="number"
-                          id="categoryId"
-                          value={categoryId}
-                          onChange={(e) => setCategoryId(parseInt(e.target.value))}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="images">Images (separated by commas):</label>
-                        <input
-                          type="text"
-                          id="images"
-                          value={images.join(", ")}
-                          onChange={(e) => setImages(e.target.value.split(",").map((url) => url.trim()))}
-                        />
-                      </div>
-                      <button type="submit">Create Product</button>
-                    </form>
-                    </div>
-
-
+              <form className={styles.form} onSubmit={handleSubmit}>
+                {error && <p>{error}</p>}
+                {success && <p>{success}</p>}
+                <div>
+                  <label htmlFor="title">Title:</label>
+                  <input
+                    type="text"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="price">Price:</label>
+                  <input
+                    type="number"
+                    id="price"
+                    value={price}
+                    onChange={(e) => setPrice(parseFloat(e.target.value))}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="description">Description:</label>
+                  <textarea
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="categoryId">Category:</label>
+                  <select
+                    id="categoryId"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(parseInt(e.target.value))}
+                  >
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="images">Images (separated by commas):</label>
+                  <input
+                    type="text"
+                    id="images"
+                    value={images.join(", ")}
+                    onChange={(e) =>
+                      setImages(e.target.value.split(",").map((url) => url.trim()))
+                    }
+                  />
+                </div>
+                <button  className={styles.boton} type="submit">Create Product</button>
+              </form>
+            </div>
           </div>
         </div>
-  
-    </section>
-  </>
+      </section>
+    </>
   );
-  
 };
 
 export default CreateProduct;
-
-
-
