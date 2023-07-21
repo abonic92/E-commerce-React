@@ -52,7 +52,39 @@
     .sidebar {
       width: 100%;
     }
-  }
-   
-  
+  } 
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+  background-color: rgba(126, 126, 126, 0.319);
+  border-radius: 20px;
+}
+
+
+button {
+  padding: 10px 20px;
+  background-color: #0f9c6bc8;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+
+button:hover {
+  background-color: #08c492;
 }

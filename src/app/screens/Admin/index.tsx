@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
-import Categories from "../Categories";
 
 const AdminPage: React.FC = () => {
   return (
@@ -19,16 +18,10 @@ const AdminPage: React.FC = () => {
         
             
           <h1> "Bienvenido a la sección de Dashboard para administradores"</h1>
-            <Categories></Categories>
+            <img src="./Logo.png" alt="Logo" className={styles.logo} />
 
         </div>
        
-
-      <div className={styles.logoSection}>
-          {/* Aquí puedes agregar tu logo */}
-          {/* <img src="ruta_del_logo.png" alt="Logo de la empresa" /> */}
-      </div>
-      
       </div>
   
      

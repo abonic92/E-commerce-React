@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
 import { useMutation } from "react-query";
-import Categories from "../Categories";
 
 interface Category {
   name: string;
@@ -70,8 +69,8 @@ const CreateCategory: React.FC = () => {
             
           <h1> "Creación de Categorias"</h1>
           <>
-
-              <form onSubmit={handleSubmit}>
+          <div className={styles.container}>
+              <form className={styles.form} onSubmit={handleSubmit}>
                 {error && <p>{error}</p>}
                 {success && <p>{success}</p>}
                 <div>
@@ -94,19 +93,13 @@ const CreateCategory: React.FC = () => {
                 </div>
                 <button type="submit">Create Category</button>
               </form>
-              <Categories></Categories>
-
-
+             
+              </div>
               </>
 
         </div>
        
-
-      <div className={styles.logoSection}>
-          {/* Aquí puedes agregar tu logo */}
-          {/* <img src="ruta_del_logo.png" alt="Logo de la empresa" /> */}
-      </div>
-      
+     
       </div>
   
      

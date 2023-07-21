@@ -3,8 +3,6 @@ import { useMutation } from "react-query";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
 
-
-
 interface Product {
   title: string;
   price: number;
@@ -61,10 +59,9 @@ const CreateProduct: React.FC = () => {
     createProductMutation.mutate({ title, price, description, categoryId, images });
   };
 
-
   return (
   <>
-    
+ 
     <section  className= {styles.layout}>
       
       
@@ -77,8 +74,8 @@ const CreateProduct: React.FC = () => {
           
               
             <h1> "Creacion de Productos"</h1>
-  
-                    <form onSubmit={handleSubmit}>
+            <div className={styles.container}>
+                    <form  className={styles.form} onSubmit={handleSubmit}>
                       {error && <p>{error}</p>}
                       {success && <p>{success}</p>}
                       <div>
@@ -127,7 +124,7 @@ const CreateProduct: React.FC = () => {
                       </div>
                       <button type="submit">Create Product</button>
                     </form>
-      
+                    </div>
 
 
           </div>

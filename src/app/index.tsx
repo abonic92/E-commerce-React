@@ -67,7 +67,7 @@ function App() {
               }
             />
 
-<Route
+            <Route
               path="/category/create"
               element={
                 <AdminRoute>
