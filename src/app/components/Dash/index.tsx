@@ -16,11 +16,11 @@ const Dash: React.FC = () => {
           <Link to="/category/create" className={styles.linkItem}>
             Agregar Categorias
           </Link>
-          <Link to="/" className={styles.linkItem}>
-            Editar Categorias
-          </Link>
-          <Link to="/" className={styles.linkItem}>
+          <Link to="/product/edit" className={styles.linkItem}>
             Editar Productos
+          </Link>
+          <Link to="/category/edit" className={styles.linkItem}>
+            Editar Categorias
           </Link>
         </div>
       </div>

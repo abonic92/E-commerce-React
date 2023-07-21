@@ -15,7 +15,8 @@ import { AdminRoute } from './components/AdminRoute';
 import CreateCategoryForm from "./screens/CreateCategory";
 import AdminPage from "./screens/Admin";
 import CreateProduct from "./screens/CreateProduct";
-
+import EditCategory from "./screens/EditCategory";
+import EditProduct from "./screens/EditProduct";
 
 
 const queryClient = new QueryClient();
@@ -72,6 +73,22 @@ function App() {
               element={
                 <AdminRoute>
                   <CreateCategoryForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/category/edit"
+              element={
+                <AdminRoute>
+                  <EditCategory />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/product/edit"
+              element={
+                <AdminRoute>
+                  <EditProduct />
                 </AdminRoute>
               }
             />
