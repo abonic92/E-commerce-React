@@ -174,13 +174,13 @@ const EditCategory: React.FC = () => {
                 className="customInput"
               />
             </div>
-            <button type="submit" disabled={isUpdating} className="customButton">
+            <button type="submit" disabled={isUpdating} className="customButtonAceptar">
               Guardar
             </button>
             <button
               onClick={handleModalClose}
               disabled={isUpdating}
-              className="customButton"
+              className="customButtonEliminar"
             >
               Cancelar
             </button>

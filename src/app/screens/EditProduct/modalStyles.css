@@ -14,7 +14,7 @@
   background-color: #910000f5;
   border-radius: 10px;
   padding: 20px;
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
   color: #fafafa;
 
@@ -25,8 +25,17 @@
   align-items: center;
 }
 
+
+
+/* Modificar el tamaño del contenedor de customInput */
+.contenedorCustomInput {
+  max-width: 100%;
+  background-color: #000279;
+  /* Puedes ajustar el ancho según tus necesidades */
+}
+
 .customInput {
-  width: 90%;
+  width: 100%; /* El campo ocupará el ancho completo del contenedor */
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;

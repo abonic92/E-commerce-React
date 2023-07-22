@@ -149,7 +149,7 @@ const ProductAdmin: React.FC = () => {
         <Dash />
       </div>
       <div className={styles.productList}>
-        <h2>Product List</h2>
+        <h2>Edicion de Productos</h2>
         <CardList>
           {data?.map((product) => (
             <div key={product.id}>
@@ -260,13 +260,13 @@ const ProductAdmin: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <button type="submit" disabled={isUpdating} className="customButton">
+              <button type="submit" disabled={isUpdating} className="customButtonAceptar">
                 Guardar
               </button>
               <button
                 onClick={handleModalClose}
                 disabled={isUpdating}
-                className="deleteButton"
+                className="customButtonEliminar"
               >
                 Cancelar
               </button>
