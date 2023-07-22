@@ -52,12 +52,9 @@
     .sidebar {
       width: 100%;
     }
-  } 
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
+  }
+   
+  
 }
 
 .form > div {
@@ -89,3 +86,25 @@
   background-color: #08c4a8;
 }
 
+
+
+.deleteButton{
+    background-color: rgb(207, 0, 0);
+  }
+
+.deleteButton:hover{
+    background-color: rgb(255, 47, 47);
+  }
+
+  .editButton{
+    background-color: #0f9c6bc8;
+  }
+
+.editButton:hover{
+    background-color: #08c4a8;
+  }
+
+.withButton {
+    padding: 2px;
+    margin-block-start: 1rem;
+}
