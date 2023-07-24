@@ -1,76 +1,52 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import Dash from "../../components/Dash";
-import { useMutation } from "react-query";
 import Categories from "../Categories";
+import useCreateCategory from "../../hooks/useCreateCategory";
+import Loader from "../../components/Loader";
 
-interface Category {
-  name: string;
-  image: string;
-}
+
 
 const CreateCategory: React.FC = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { createCategoryMutation, isLoading } = useCreateCategory({ setError, setSuccess });
 
-  const createCategoryMutation = useMutation((data: Category) => {
-    return fetch("https://api.escuelajs.co/api/v1/categories/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          setError(res.statusText);
-          throw new Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then((resData) => {
-        setSuccess("Category created successfully");
-        // Aquí puedes manejar la respuesta del servidor
-        console.log(resData);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  });
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImage(e.target.value);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
-    // Validar los campos antes de enviar la solicitud
-    if (!name || !image) {
-      setError("Please fill in all the fields");
-      return;
-    }
-
-    createCategoryMutation.mutate({ name, image });
+    createCategoryMutation.mutate({ name, image }).then(() => {
+      setSuccess("Category created successfully");
+      setName("");
+      setImage("");
+      setError("");
+    });
   };
 
+
   return (
-    <>
-    
-    <section  className= {styles.layout}>
-      
-      
-      <div  className={styles.sidebar}> 
+    <section className={styles.layout}>
+      <div className={styles.sidebar}>
         <Dash />
       </div>
 
       <div className={styles.productList}>
-        <div  className= {styles.body}>
-        
-            
-          <h1> "Creación de Categorias"</h1>
-          <>
-          <div className={styles.container}>
+        <div className={styles.body}>
+          <h1>Creación de Categorias</h1>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className={styles.container}>
               <form className={styles.form} onSubmit={handleSubmit}>
                 {error && <p>{error}</p>}
                 {success && <p>{success}</p>}
@@ -80,7 +56,7 @@ const CreateCategory: React.FC = () => {
                     type="text"
                     id="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={handleNameChange}
                   />
                 </div>
                 <div>
@@ -89,28 +65,18 @@ const CreateCategory: React.FC = () => {
                     type="text"
                     id="image"
                     value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    onChange={handleImageChange}
                   />
                 </div>
-                <button className={styles.boton}type="submit">Create Category</button>
+                <button className={styles.boton} type="submit">Create Category</button>
               </form>
-              
-             
-              </div>
-              </>
-              <Categories></Categories>
+            </div>
+          )}
+          <Categories />
         </div>
-       
-     
       </div>
-  
-     
     </section>
-    </>
   );
 };
 
 export default CreateCategory;
-
-
-

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useMutation } from "react-query";
+import React, { useState } from "react";
+import useCreateProduct from "../../hooks/useCreateProduct";
+import useCategories from "../../hooks/useCategories";
 import styles from "./styles.module.css";
+import Loader from "../../components/Loader";
+import ErrorMessage from "../../components/Error";
 import Dash from "../../components/Dash";
 
 interface Category {
@@ -8,164 +11,164 @@ interface Category {
   name: string;
 }
 
-interface Product {
-  title: string;
-  price: number;
-  description: string;
-  categoryId: number;
-  images: string[];
-}
-
 const CreateProduct: React.FC = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
-  const [categoryId, setCategoryId] = useState(1);
-  const [images, setImages] = useState<string[]>([]);
+  const [categoryId, setCategoryId] = useState(0);
+  const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [categories, setCategories] = useState<Category[]>([]);
+  const createProductMutation = useCreateProduct(setError, setSuccess);
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useCategories();
 
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch("https://api.escuelajs.co/api/v1/categories");
-      const data = await response.json();
-      setCategories(data);
-    } catch (error) {
-      setError("Error al obtener las categorías");
-    }
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
 
-  const createProductMutation = useMutation((data: Product) => {
-    return fetch("https://api.escuelajs.co/api/v1/products/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          setError("Error creating product");
-          throw new Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then((resData) => {
-        setSuccess("Product created successfully");
-        console.log(resData);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  });
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice(parseFloat(e.target.value));
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryId(parseInt(e.target.value));
+  };
+
+  const handleAddImageURL = () => {
+    setImageURLs([...imageURLs, ""]);
+  };
+
+  const handleRemoveImageURL = (index: number) => {
+    const updatedImageURLs = [...imageURLs];
+    updatedImageURLs.splice(index, 1);
+    setImageURLs(updatedImageURLs);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
-    // Validate the fields before sending the request
-    if (!title || !price || !description || !categoryId || images.length === 0) {
-      setError("Please fill in all the fields");
-      return;
-    }
+    const productData = {
+      title,
+      price,
+      description: description.trim() || undefined,
+      categoryId,
+      images: imageURLs.filter((url) => url.trim() !== ""),
+    };
 
-    createProductMutation.mutate({ title, price, description, categoryId, images });
+    createProductMutation.mutate(productData, {
+      onSuccess: () => {
+        setSuccess("Product created successfully");
+        setTitle("");
+        setPrice(0);
+        setDescription("");
+        setCategoryId(0);
+        setImageURLs([]);
+        setError("");
+      },
+      onError: (error) => {
+        setError(error.message);
+      }
+    });
   };
 
-  // Función para restablecer los campos del formulario después de crear un producto
-  const resetForm = () => {
-    setTitle("");
-    setPrice(0);
-    setDescription("");
-    setCategoryId(1);
-    setImages([]);
-  };
+  if (isLoadingCategories) {
+    return <Loader />;
+  }
 
-  useEffect(() => {
-    if (createProductMutation.isSuccess) {
-      setSuccess("Product created successfully");
-      resetForm(); // Restablecer el formulario después de crear el producto
-    }
-  }, [createProductMutation.isSuccess]);
+  if (categoriesError) {
+    return <ErrorMessage message="Error fetching categories" />;
+  }
 
   return (
-    <>
-      <section className={styles.layout}>
-        <div className={styles.sidebar}>
-          <Dash />
-        </div>
-        <div className={styles.productList}>
-          <div className={styles.body}>
-            <h1>Creacion de Productos</h1>
-            <div className={styles.container}>
-              <form className={styles.form} onSubmit={handleSubmit}>
-                {error && <p>{error}</p>}
-                {success && <p>{success}</p>}
+    <section className={styles.layout}>
+      <div className={styles.sidebar}>
+        <Dash />
+      </div>
+      <div className={styles.productList}>
+        <div className={styles.body}>
+          <h1>Creacion de Productos</h1>
+          <div className={styles.container}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              {error && <p>{error}</p>}
+              {success && <p>{success}</p>}
+              <div>
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={handleTitleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="price">Price:</label>
+                <input
+                  type="number"
+                  id="price"
+                  value={price}
+                  onChange={handlePriceChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="categoryId">Category:</label>
+                <select
+                  id="categoryId"
+                  value={categoryId}
+                  onChange={handleCategoryChange}
+                >
+                  {categories.map((category: Category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label>Images:</label>
                 <div>
-                  <label htmlFor="title">Title:</label>
-                  <input
-                    type="text"
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
+                  {imageURLs.map((url, index) => (
+                    <div key={index}>
+                      <input
+                        type="text"
+                        value={url}
+                        onChange={(e) => {
+                          const updatedImageURLs = [...imageURLs];
+                          updatedImageURLs[index] = e.target.value;
+                          setImageURLs(updatedImageURLs);
+                        }}
+                      />
+                      <button type="button" onClick={() => handleRemoveImageURL(index)}>
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                  <div>
+                    <button type="button" onClick={handleAddImageURL}>
+                      Add Image URL
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="price">Price:</label>
-                  <input
-                    type="number"
-                    id="price"
-                    value={price}
-                    onChange={(e) => setPrice(parseFloat(e.target.value))}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="description">Description:</label>
-                  <textarea
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="categoryId">Category:</label>
-                  <select
-                    id="categoryId"
-                    value={categoryId}
-                    onChange={(e) => setCategoryId(parseInt(e.target.value))}
-                  >
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="images">Images (separated by commas):</label>
-                  <input
-                    type="text"
-                    id="images"
-                    value={images.join(", ")}
-                    onChange={(e) =>
-                      setImages(e.target.value.split(",").map((url) => url.trim()))
-                    }
-                  />
-                </div>
-                <button  className={styles.boton} type="submit">Create Product</button>
-              </form>
-            </div>
+              </div>
+              <button className={styles.boton} type="submit">Create Product</button>
+            </form>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
-export default CreateProduct
+export default CreateProduct;
