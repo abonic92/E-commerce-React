@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
@@ -63,6 +63,9 @@ const ProductAdmin: React.FC = () => {
   };
 
   const [imageURLs, setImageURLs] = useState<string[]>(newProductImages);
+  useEffect(() => {
+    setImageURLs(newProductImages);
+  }, [newProductImages]);
 
   const handleAddImageURL = () => {
     setImageURLs([...imageURLs, ""]);
@@ -73,6 +76,9 @@ const ProductAdmin: React.FC = () => {
     updatedImageURLs.splice(index, 1);
     setImageURLs(updatedImageURLs);
   };
+  
+ 
+
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
@@ -115,7 +121,6 @@ const ProductAdmin: React.FC = () => {
     ) {
       const { id } = editingProduct;
       try {
-        // Realiza la solicitud de edición utilizando el método fetch
         await editProductMutation(id, {
           title: newProductTitle,
           price: parseFloat(newProductPrice),
@@ -123,14 +128,10 @@ const ProductAdmin: React.FC = () => {
           images: imageURLs,
         });
 
-        // Actualiza los datos del producto localmente (opcional, depende de tu implementación)
-        // Puedes usar queryClient.invalidateQueries("products") si usas React Query para actualizar los datos.
-        // handleSuccess();
       } catch (error) {
         console.error("Error updating product:", error);
       }
 
-      // Cierra el modal de edición una vez que la solicitud se haya completado
       setIsModalOpen(false);
     }
   };
