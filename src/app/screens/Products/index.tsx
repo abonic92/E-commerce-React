@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import { Category, Product } from "../Interface";
+import { Link } from "react-router-dom";
 
 
 const fetchCategories = async () => {
@@ -143,12 +144,14 @@ const Products: React.FC = () => {
           <CardList>
             {filteredProducts.map((product) => (
               <div key={product.id} className={styles.productCard}>
+                <Link to={`/product/${product.id}`} className={styles.productLink}>
                 <CardChildren
                   image={product.images[0]}
                   title={product.title}
                   price={product.price}
                   description={product.description}
                 />
+                </Link>
               </div>
             ))}
           </CardList>
