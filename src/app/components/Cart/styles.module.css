@@ -1,0 +1,19 @@
+.cart {
+    display: flex;
+
+}
+.cartIcon {
+    font-size: 24px;
+    margin-right: 8px;
+  }
+  
+.cartTotal {
+    font-weight: bold;
+    color: rgb(75, 25, 255);
+
+  }
+  
+.cartItemsCount {
+    font-size: 15px;
+    color:  rgb(75, 25, 255);
+}

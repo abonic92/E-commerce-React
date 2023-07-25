@@ -17,6 +17,9 @@ import AdminPage from "./screens/Admin";
 import CreateProduct from "./screens/CreateProduct";
 import EditCategory from "./screens/EditCategory";
 import EditProduct from "./screens/EditProduct";
+import CartProvider from './hooks/CartContext';
+import DetailProduct from './screens/DetailProduct.tsx';
+import DetailCart from './screens/Cart/index.tsx';
 
 
 const queryClient = new QueryClient();
@@ -42,6 +45,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+      <CartProvider>
       <Routes>
           <Route element={<Layout loggedIn={loggedIn} userName={userName} handleLogout={handleLogout} />}>
 
@@ -49,7 +53,8 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/category/:categoryId/products" element={<ProductsByCategory />} />
             <Route path="/products" element={<Products />} />
-            
+            <Route path="/product/:productId" element={<DetailProduct />} />
+            <Route path="/cart/detail" element={<DetailCart />} />
 
             <Route
               path="/adminpage"
@@ -111,7 +116,7 @@ function App() {
             </Route>
           <Route path="*" element={<NotFound />} />
       </Routes>
-        
+      </CartProvider>
       </BrowserRouter>
     </QueryClientProvider>
   );

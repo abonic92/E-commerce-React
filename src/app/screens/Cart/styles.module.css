@@ -1,0 +1,112 @@
+/* Contenedor principal */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  color: #181818;
+}
+
+/* Columna de imágenes */
+.imageColumn {
+  flex: 1;
+  padding: 1rem;
+}
+
+/* Estilos para las imágenes */
+.imageWrapper {
+  max-height: 500px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.imageWrapper img {
+  width: 500px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Estilos para las miniaturas de las imágenes */
+.thumbnailWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;  }
+
+.thumbnailWrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Estilos para la miniatura seleccionada */
+.selectedThumbnail {
+  border: 2px solid #082766fd;
+}
+
+/* Columna de datos */
+.dataColumn {
+  flex: 1;
+  max-width: 100%;
+  align-self: center;
+}
+
+/* Estilos para la información del producto */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Estilos para el título del producto */
+.productTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Estilos para el precio del producto */
+.productPrice {
+  font-size: 20px;
+}
+
+/* Estilos para la descripción del producto */
+.productDescription {
+  font-size: 16px;
+}
+
+/* Media queries para tamaños de pantalla más pequeños */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse; /* Cambiar el orden de las columnas en pantallas pequeñas */
+  }
+
+  .imageColumn,
+  .dataColumn {
+    flex: none; /* Anular flex: 1 para que las columnas no ocupen la mitad de la pantalla */
+    max-width: 100%; /* Hacer que ambas columnas ocupen el ancho completo de la pantalla */
+  }
+
+  .imageWrapper {
+    max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
+  }
+
+  .thumbnailWrapper {
+    justify-content: center; /* Centrar las miniaturas en pantallas pequeñas */
+  }
+}
+
+/* Media queries para tamaños de pantalla grandes */
+@media (min-width: 769px) {
+  .container {
+    flex-direction: row; /* Mostrar las columnas una al lado de la otra en pantallas grandes */
+  }
+}
+
+
+.categoryProducts {
+padding-left: 5rem;
+padding-right: 5rem;
+}

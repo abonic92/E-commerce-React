@@ -33,7 +33,7 @@
   filter: drop-shadow(0 0 2em #c37171);
 }
 
-ul {
+.ula {
   list-style: none;
   display: flex;
   justify-content: flex-end;
@@ -41,6 +41,24 @@ ul {
   margin-right: 20px;
   padding: 0;
   font-size: large;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: flex-start;
+
+}
+
+ul li {
+  margin: 0 0.75rem;
+}
+
+
+ul:hover a:hover {
+  color: #d20a0a;
+  box-shadow: 0 3px 0 0 currentColor;
 }
 
 li {
