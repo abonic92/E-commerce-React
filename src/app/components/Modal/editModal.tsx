@@ -1,5 +1,29 @@
-import React from "react";
-import CustomModal from ".";
+import React, { ReactNode } from "react";
+import "./customModalStyles.css";
+
+interface Category {
+  id: number;
+  name: string;
+  image: string;
+}
+
+interface CustomModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  children: ReactNode;
+}
+
+const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, children }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="customOverlay">
+      <div className="customModal">
+        {children}
+      </div>
+    </div>
+  );
+};
 
 interface EditModalProps {
   isConfirmationModalOpen: boolean;
@@ -14,12 +38,6 @@ interface EditModalProps {
   setNewCategoryImage: React.Dispatch<React.SetStateAction<string>>;
   isUpdating: boolean;
   handleModalSubmit: () => Promise<void>;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  image: string;
 }
 
 const EditModal: React.FC<EditModalProps> = ({
