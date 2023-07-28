@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
 import styles from "./styles.module.css";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import useProducts from "../../hooks/useProducts";
-import useEditProduct from "../../hooks/useEditProduct"; // Importa el nuevo hook
+import useEditProduct from "../../hooks/useEditProduct";
 import useDeleteProduct from "../../hooks/useDeleteProduct";
-
-import "./modalStyles.css";
 import { useQueryClient } from "react-query";
 import Dash from "../../components/Dash";
+import EditModal from "../../components/ModalProduct/editModal";
 
 interface Product {
   id: number;
@@ -76,9 +74,6 @@ const ProductAdmin: React.FC = () => {
     updatedImageURLs.splice(index, 1);
     setImageURLs(updatedImageURLs);
   };
-  
- 
-
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
@@ -127,7 +122,6 @@ const ProductAdmin: React.FC = () => {
           description: newProductDescription,
           images: imageURLs,
         });
-
       } catch (error) {
         console.error("Error updating product:", error);
       }
@@ -160,7 +154,9 @@ const ProductAdmin: React.FC = () => {
                 price={product.price}
                 description={product.description}
               />
-              <button className={styles.editButton} onClick={() => handleEditProduct(product)}>Editar</button>
+              <button className={styles.editButton} onClick={() => handleEditProduct(product)}>
+                Editar
+              </button>
               <button
                 className={styles.deleteButton}
                 onClick={() => {
@@ -174,106 +170,25 @@ const ProductAdmin: React.FC = () => {
           ))}
         </CardList>
 
-        {/* Modal de confirmación */}
-        <Modal
-          isOpen={isConfirmationModalOpen}
-          onRequestClose={handleCancelDelete}
-          className="customModal"
-          overlayClassName="customOverlay"
-        >
-          <h2>¿Estás seguro que deseas eliminar este producto?</h2>
-          <div className="confirmationButtons">
-            <button className="customButtonAceptar" onClick={handleConfirmation}>
-              ACEPTAR
-            </button>
-            <button className="customButtonEliminar" onClick={handleCancelDelete}>
-              CANCELAR
-            </button>
-          </div>
-        </Modal>
-
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={handleModalClose}
-          className="customModal"
-          overlayClassName="customOverlay"
-        >
-          <h2>Editar Producto</h2>
-          {editingProduct && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleModalSubmit();
-              }}
-            >
-              <div>
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  id="title"
-                  value={newProductTitle}
-                  onChange={(e) => setNewProductTitle(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label htmlFor="price">Price:</label>
-                <input
-                  type="number"
-                  id="price"
-                  value={newProductPrice}
-                  onChange={(e) => setNewProductPrice(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label htmlFor="description">Description:</label>
-                <textarea
-                  id="description"
-                  value={newProductDescription}
-                  onChange={(e) => setNewProductDescription(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label>Images:</label>
-                <div>
-                  {imageURLs.map((url, index) => (
-                    <div key={index}>
-                      <input
-                        type="text"
-                        value={url}
-                        onChange={(e) => {
-                          const updatedImageURLs = [...imageURLs];
-                          updatedImageURLs[index] = e.target.value;
-                          setImageURLs(updatedImageURLs);
-                        }}
-                      />
-                      <button type="button" onClick={() => handleRemoveImageURL(index)}>
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                  <div>
-                    <button type="button" onClick={handleAddImageURL}>
-                      Add Image URL
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" disabled={isUpdating} className="customButtonAceptar">
-                Guardar
-              </button>
-              <button
-                onClick={handleModalClose}
-                disabled={isUpdating}
-                className="customButtonEliminar"
-              >
-                Cancelar
-              </button>
-            </form>
-          )}
-        </Modal>
+        {/* Include the EditModal component here */}
+        <EditModal
+          isConfirmationModalOpen={isConfirmationModalOpen}
+          handleConfirmationModalClose={handleCancelDelete}
+          handleConfirmation={handleConfirmation}
+          isModalOpen={isModalOpen}
+          handleModalClose={handleModalClose}
+          editingProduct={editingProduct}
+          newProductTitle={newProductTitle}
+          setNewProductTitle={setNewProductTitle}
+          newProductPrice={newProductPrice}
+          setNewProductPrice={setNewProductPrice}
+          newProductDescription={newProductDescription}
+          setNewProductDescription={setNewProductDescription}
+          imageURLs={imageURLs}
+          setImageURLs={setImageURLs}
+          isUpdating={isUpdating}
+          handleModalSubmit={handleModalSubmit}
+        />
       </div>
     </section>
   );

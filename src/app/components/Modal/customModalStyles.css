@@ -1,0 +1,66 @@
+.customOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.customModal {
+  background-color: #910000f5;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  color: #fafafa;
+
+  /* Modificación para centrar los botones */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedorCustomInput {
+  max-width: 100%;
+  background-color: #910000f5;
+  /* Puedes ajustar el ancho según tus necesidades */
+}
+
+.customInput {
+  width: 100%; /* El campo ocupará el ancho completo del contenedor */
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.customButtonAceptar,
+.customButtonEliminar,
+.customButtonCancelar {
+  padding: 8px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #000279;
+  color: #fff;
+}
+
+.customButtonAceptar:hover
+ {
+  background-color: #08c4a8;
+  cursor: pointer;
+}
+
+.customButtonEliminar:hover,
+.customButtonCancelar:hover
+{
+  background-color: rgb(252, 122, 122);
+  cursor: pointer;
+}
