@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useCartContext } from "../../hooks/CartContext";
 import styles from "./styles.module.css";
 import Categories from "../Categories";
@@ -14,11 +15,17 @@ const DetailCart: React.FC = () => {
   return (
     <>
       <div className={styles.container}>
-        <h2>Shopping Cart</h2>
-        {cartItems.length === 0 ? ( 
+        <h1>Shopping Cart</h1>
+        {cartItems.length === 0 ? (
           <>
-            <p>Your cart is empty.</p>
-            <Categories />
+            <div className={styles.emptyCart}>
+              <img src="/bolsa3.png" alt="Empty Cart" className={styles.logo} />
+              <h2>Your cart is empty.</h2>
+              {/* Aplica la clase 'exploreButton' al componente Link */}
+              <Link to="/products" className={styles.exploreButton}>
+                Explore Products
+              </Link>
+            </div>
           </>
         ) : (
           <>

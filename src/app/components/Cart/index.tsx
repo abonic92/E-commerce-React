@@ -12,17 +12,17 @@ const Cart: React.FC = () => {
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <Link to ="cart/detail"> 
+    <Link to="cart/detail">
       <div className={styles.cart}>
-        {/* <div className={styles.cartIcon}>
-          <span className={styles.cartItemsCount}>{totalItems}</span>
-         
-        </div> */}
-
-        <div className={styles.cartTotal}>
-          $ {totalAmount}
+        <div className={styles.cartDetails}>
+          <div className={styles.cartTotal}>
+            Total $ {totalAmount}
+          </div>
+          <div className={styles.cartIcon}>
+            <span className={styles.cartItemsCount}>Items {totalItems}</span>
+          </div>
         </div>
-        <img src="/camion.png" alt="Camion"/>
+        <img src="/camion.png" alt="Camion" />
       </div>
     </Link>
 

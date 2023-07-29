@@ -1,5 +1,5 @@
 import React from "react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import { UserData } from "../../screens/Interface";
 import { AdminRoute } from "../AdminRoute";
@@ -17,18 +17,18 @@ const Nav: React.FC<NavProps> = ({ loggedIn, handleLogout }) => {
   const navigate = useNavigate();
 
   const handleDashboardClick = () => {
-    navigate ("/adminpage");
+    navigate("/adminpage");
   };
 
   return (
     <nav className={styles.navbar}>
-       <Link to="/">
+      <Link to="/">
         <div className={styles.logo}>
           <img src="/Logo.png" alt="Logo" className={styles.logoImg} />
         </div>
       </Link>
-      <div  className={styles.logo}>
-        <ul>
+      <div className={styles.logo}>
+        <ul className={styles.ul}>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -43,47 +43,45 @@ const Nav: React.FC<NavProps> = ({ loggedIn, handleLogout }) => {
           </li>
         </ul>
       </div>
-        <div className={styles.ula}> 
-        
-          <li>
-              <Cart />
-          </li>
-         
-          
-          {loggedIn ? (
-            <>
+      <div className={styles.ula}>
+        <li>
+          <Cart />
+        </li>
+
+        {loggedIn ? (
+          <>
+            <li>
+              {userData ? (
+                <span className={styles.welcomeMsg}>Hola {userData.name}</span>
+              ) : null}
+            </li>
+            {isAdmin && (
               <li>
-                {userData ? (
-                  <span className={styles.welcomeMsg}>Hola {userData.name}</span>
-                ) : null}
-              </li>
-              {isAdmin && (
-                <li>
-                  <button className={styles.dashboardBtn} onClick={handleDashboardClick}>
-                    Dashboard
-                  </button>
-                </li>
-              )}
-              <li>
-                <button className={styles.logoutBtn} onClick={handleLogout}>
-                  Logout
+                <button className={styles.dashboardBtn} onClick={handleDashboardClick}>
+                  Dashboard
                 </button>
               </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/register" className={styles.btnR}>
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link to="/login" className={styles.btnL}>
-                  Login
-                </Link>
-              </li>
-            </>
-          )}
+            )}
+            <li>
+              <button className={styles.logoutBtn} onClick={handleLogout}>
+                Logout
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/register" className={styles.btnR}>
+                Register
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className={styles.btnL}>
+                Login
+              </Link>
+            </li>
+          </>
+        )}
       </div>
     </nav>
   );

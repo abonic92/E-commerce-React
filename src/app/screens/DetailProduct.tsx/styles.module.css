@@ -1,112 +1,306 @@
 /* Contenedor principal */
 .container {
-    display: flex;
-    gap: 20px;
-    padding: 10px;
-    background-color: #ffffff;
-    margin-left: 3rem;
-    margin-right: 3rem;
-    color: #181818;
-  }
-  
-  /* Columna de imágenes */
-  .imageColumn {
-    flex: 1;
-    padding: 1rem;
-  }
-  
-  /* Estilos para las imágenes */
-  .imageWrapper {
-    max-height: 500px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  
-  .imageWrapper img {
-    width: 500px;
-    height: auto;
-    object-fit: cover;
-  }
-  
-  /* Estilos para las miniaturas de las imágenes */
-  .thumbnailWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;  }
-  
-  .thumbnailWrapper img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    cursor: pointer;
-  }
-  
-  /* Estilos para la miniatura seleccionada */
-  .selectedThumbnail {
-    border: 2px solid #082766fd;
-  }
-  
-  /* Columna de datos */
-  .dataColumn {
-    flex: 1;
-    max-width: 100%;
-    align-self: center;
-  }
-  
-  /* Estilos para la información del producto */
-  .productInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  /* Estilos para el título del producto */
-  .productTitle {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Estilos para el precio del producto */
-  .productPrice {
-    font-size: 20px;
-  }
-  
-  /* Estilos para la descripción del producto */
-  .productDescription {
-    font-size: 16px;
-  }
-  
-  /* Media queries para tamaños de pantalla más pequeños */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column-reverse; /* Cambiar el orden de las columnas en pantallas pequeñas */
-    }
-  
-    .imageColumn,
-    .dataColumn {
-      flex: none; /* Anular flex: 1 para que las columnas no ocupen la mitad de la pantalla */
-      max-width: 100%; /* Hacer que ambas columnas ocupen el ancho completo de la pantalla */
-    }
-  
-    .imageWrapper {
-      max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
-    }
-  
-    .thumbnailWrapper {
-      justify-content: center; /* Centrar las miniaturas en pantallas pequeñas */
-    }
-  }
-  
-  /* Media queries para tamaños de pantalla grandes */
-  @media (min-width: 769px) {
-    .container {
-      flex-direction: row; /* Mostrar las columnas una al lado de la otra en pantallas grandes */
-    }
-  }
-  
+  display: flex;
+  gap: 20px;
+  padding: 5px;
+  background-color: #292929;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  color: #ffffff;
+}
 
-.categoryProducts {
-  padding-left: 5rem;
-  padding-right: 5rem;
+/* Columna de imágenes */
+.imageColumn {
+  flex: 1;
+  padding: 1rem;
+}
+
+/* Estilos para las imágenes */
+.imageWrapper {
+  max-height: 400px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.imageWrapper img {
+  width: 400px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Estilos para las miniaturas de las imágenes */
+.thumbnailWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.thumbnailWrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+}/* Contenedor principal */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 5px;
+  background-color: #292929;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  color: #ffffff;
+}
+
+/* Columna de imágenes */
+.imageColumn {
+  flex: 1;
+  padding: 1rem;
+}
+
+/* Estilos para las imágenes */
+.imageWrapper {
+  max-height: 400px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.imageWrapper img {
+  width: 400px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Estilos para las miniaturas de las imágenes */
+.thumbnailWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.thumbnailWrapper img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Estilos para la miniatura seleccionada */
+.selectedThumbnail {
+  border: 2px solid #f62e2efd;
+}
+
+/* Columna de datos */
+.dataColumn {
+  flex: 1;
+  max-width: 100%;
+  align-self: center;
+}
+
+/* Estilos para la información del producto */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Estilos para el título del producto */
+.productTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Estilos para el precio del producto */
+.productPrice {
+  font-size: 20px;
+}
+
+/* Estilos para la descripción del producto */
+.productDescription {
+  font-size: 16px;
+}
+
+/* Media queries para tamaños de pantalla más pequeños */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse; /* Cambiar el orden de las columnas en pantallas pequeñas */
+  }
+
+  .imageColumn,
+  .dataColumn {
+    flex: none; /* Anular flex: 1 para que las columnas no ocupen la mitad de la pantalla */
+    max-width: 100%; /* Hacer que ambas columnas ocupen el ancho completo de la pantalla */
+  }
+
+  .imageWrapper {
+    max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
+  }
+
+  .thumbnailWrapper {
+    justify-content: center; /* Centrar las miniaturas en pantallas pequeñas */
+  }
+}
+
+/* Media queries para tamaños de pantalla grandes */
+@media (min-width: 769px) {
+  .container {
+    flex-direction: row; /* Mostrar las columnas una al lado de la otra en pantallas grandes */
+  }
+}
+
+/* Estilos para el botón addToCartButton */
+.addToCartButton {
+  background-color: rgba(255, 255, 255, 0.05);
+  letter-spacing: 0;
+  padding: 10px 11px; /* Ajustar el padding del botón para hacerlo más pequeño */
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 280ms ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.addToCartButton:hover,
+.addToCartButton:active {
+  letter-spacing: 5px;
+}
+
+.addToCartButton:after,
+.addToCartButton:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.addToCartButton:hover:after,
+.addToCartButton:hover:before {
+  backface-visibility: hidden;
+  border-color: #fff;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+.addToCartButton:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
+
+
+/* Estilos para la miniatura seleccionada */
+.selectedThumbnail {
+  border: 2px solid #f62e2efd;
+}
+
+/* Columna de datos */
+.dataColumn {
+  flex: 1;
+  max-width: 100%;
+  align-self: center;
+}
+
+/* Estilos para la información del producto */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Estilos para el título del producto */
+.productTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Estilos para el precio del producto */
+.productPrice {
+  font-size: 20px;
+}
+
+/* Estilos para la descripción del producto */
+.productDescription {
+  font-size: 16px;
+}
+
+/* Media queries para tamaños de pantalla más pequeños */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse; /* Cambiar el orden de las columnas en pantallas pequeñas */
+  }
+
+  .imageColumn,
+  .dataColumn {
+    flex: none; /* Anular flex: 1 para que las columnas no ocupen la mitad de la pantalla */
+    max-width: 100%; /* Hacer que ambas columnas ocupen el ancho completo de la pantalla */
+  }
+
+  .imageWrapper {
+    max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
+  }
+
+  .thumbnailWrapper {
+    justify-content: center; /* Centrar las miniaturas en pantallas pequeñas */
+  }
+}
+
+/* Media queries para tamaños de pantalla grandes */
+@media (min-width: 769px) {
+  .container {
+    flex-direction: row; /* Mostrar las columnas una al lado de la otra en pantallas grandes */
+  }
+}
+
+/* Estilos para el botón addToCartButton */
+.addToCartButton {
+  background-color: rgba(255, 255, 255, 0.05);
+  letter-spacing: 0;
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 280ms ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.addToCartButton:hover,
+.addToCartButton:active {
+  letter-spacing: 5px;
+}
+
+.addToCartButton:after,
+.addToCartButton:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.addToCartButton:hover:after,
+.addToCartButton:hover:before {
+  backface-visibility: hidden;
+  border-color: #fff;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+.addToCartButton:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
 }
