@@ -7,26 +7,26 @@
   margin-left: 3rem;
   margin-right: 3rem;
   color: #ffffff;
-  position: relative; /* Añadimos position: relative para poder posicionar .thumbnailColumn */
+  position: relative; 
 }
 
 /* Columna de miniaturas */
 .thumbnailColumn {
-  flex: none; /* Anulamos flex: 1 para que no ocupe el espacio restante */
-  max-width: 200px; /* Establecemos un ancho máximo */
-  position: absolute; /* Posicionamos la columna de miniaturas */
-  top: 0; /* Posicionamos en la parte superior */
-  left: 0; /* Posicionamos en la parte izquierda */
+  flex: none; 
+  max-width: 200px; 
+  position: absolute;
+  top: 0; 
+  left: 0; 
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start; /* Alineamos las miniaturas a la izquierda */
+  align-items: flex-start; 
 }
 
 /* Estilos para las miniaturas de las imágenes */
 .thumbnailWrapper {
   display: flex;
-  flex-direction: column; /* Mostramos las miniaturas en columna */
+  flex-direction: column; 
   gap: 10px;
 }
 
@@ -42,8 +42,8 @@
   flex: 1;
   padding: 1rem;
   display: flex;
-  align-items: center; /* Centramos la imagen verticalmente */
-  justify-content: center; /* Centramos la imagen horizontalmente */
+  align-items: center; 
+  justify-content: center; 
 }
 
 .imageWrapper {
@@ -52,7 +52,7 @@
   margin-bottom: 1rem;
   cursor: zoom-in;
   
-  position: relative; /* Añadimos position: relative para poder posicionar las miniaturas */
+  position: relative; 
 }
 
 .imageWrapper img {
@@ -70,16 +70,16 @@
 .loupe {
   display: none;
   position: absolute;
-  width: 200px; /* Tamaño de la lupa */
-  height: 200px; /* Tamaño de la lupa */
+  width: 200px; 
+  height: 200px; 
   border: 1px solid #fff;
   border-radius: 50%;
   overflow: hidden;
-  pointer-events: none; /* Evitar que la lupa afecte a la interacción con la imagen */
+  pointer-events: none; 
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
   background-repeat: no-repeat;
-  background-size: 800% 800%; /* Tamaño de la imagen en la lupa */
-  background-position: 0 0; /* Posición inicial de la imagen en la lupa */
+  background-size: 800% 800%; 
+  background-position: 0 0;
 }
 
 /* Mostrar la lupa cuando el cursor está sobre la imagen */
@@ -92,7 +92,7 @@
   flex: 1;
   max-width: 100%;
   align-self: center;
-  margin: 0 auto; /* Centrar la columna de datos en pantallas pequeñas */
+  margin: 0 auto; 
 }
 
 /* Estilos para la información del producto */
@@ -121,25 +121,25 @@
 /* Media queries para tamaños de pantalla más pequeños */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column-reverse; /* Cambiar el orden de las columnas en pantallas pequeñas */
+    flex-direction: column-reverse; 
   }
 
   .imageColumn,
   .dataColumn {
-    flex: none; /* Anular flex: 1 para que las columnas no ocupen la mitad de la pantalla */
-    max-width: 100%; /* Hacer que ambas columnas ocupen el ancho completo de la pantalla */
-    margin: 0 auto; /* Centrar la columna de datos */
+    flex: none; 
+    max-width: 100%; 
+    margin: 0 auto; 
   }
 
   .imageWrapper {
-    max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
+    max-height: 300px;
   }
 
   .thumbnailColumn {
-    position: relative; /* Ajustar el posicionamiento en pantallas pequeñas */
-    max-width: 100%; /* Ajustar el ancho máximo en pantallas pequeñas */
-    align-items: flex-start; /* Ajustar la alineación vertical en pantallas pequeñas */
-    margin-bottom: 1rem; /* Añadir margen inferior en pantallas pequeñas */
+    position: relative; 
+    max-width: 100%; 
+    align-items: flex-start; 
+    margin-bottom: 1rem; 
   }
 
   .thumbnailWrapper {
