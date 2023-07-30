@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import { UserData } from "../../screens/Interface";
 import { AdminRoute } from "../AdminRoute";
 import Cart from "../Cart";
+import { useCartContext } from "../../hooks/CartContext";
 
 interface NavProps {
   loggedIn: boolean;
@@ -15,11 +16,14 @@ const Nav: React.FC<NavProps> = ({ loggedIn, handleLogout }) => {
   const userData: UserData | null = storedUserData ? JSON.parse(storedUserData) : null;
   const isAdmin = userData?.role === "admin"; // Verificar si el usuario tiene el rol de "admin"
   const navigate = useNavigate();
-
+  const {clearCart} = useCartContext();
   const handleDashboardClick = () => {
     navigate("/adminpage");
   };
-
+  const handleLogout2 = () => {
+    handleLogout();
+    clearCart();
+  }
   return (
     <nav className={styles.navbar}>
       <Link to="/">
@@ -63,7 +67,7 @@ const Nav: React.FC<NavProps> = ({ loggedIn, handleLogout }) => {
               </li>
             )}
             <li>
-              <button className={styles.logoutBtn} onClick={handleLogout}>
+              <button className={styles.logoutBtn} onClick={handleLogout2}>
                 Logout
               </button>
             </li>

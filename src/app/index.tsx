@@ -22,6 +22,7 @@ import DetailProduct from './screens/DetailProduct.tsx';
 import DetailCart from './screens/Cart/index.tsx';
 
 
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -34,9 +35,11 @@ function App() {
     localStorage.setItem('loggedIn', loggedIn ? 'true' : 'false');
   };
   
+
   const handleLogout = () => {
     setLoggedIn(false);
     // setUserName("");
+    
     localStorage.removeItem("loggedIn"); // cerrar sesión
     localStorage.removeItem("accessToken"); // Remueve el token del local storage al cerrar sesión
     localStorage.removeItem("userData"); //Remueve los datos del usuario

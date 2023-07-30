@@ -81,7 +81,6 @@ const DetailCart: React.FC = () => {
                       Subtotal: ${item.price * item.quantity}
                     </div>
                     <div className={styles.buttonsContainerr}>
-                    
                       <button
                         className={`${styles.addButtones} buttones bttn`}
                         onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
@@ -93,8 +92,8 @@ const DetailCart: React.FC = () => {
                         onClick={() => decreaseQuantity(item.id)}
                       >
                         -
-                    </button>
-                    <button
+                      </button>
+                      <button
                         className={`${styles.removeButtones} buttones bttn-dark`}
                         onClick={() => removeFromCart(item.id)}
                       >

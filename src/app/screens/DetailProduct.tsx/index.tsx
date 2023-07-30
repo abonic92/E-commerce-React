@@ -106,6 +106,7 @@ const DetailProduct: React.FC = () => {
             <button onClick={handleAddToCart} className={styles.addToCartButton}>
               Add to Cart
             </button>
+            
           </div>
         </div>
       </div>
