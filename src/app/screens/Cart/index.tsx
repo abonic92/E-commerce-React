@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../hooks/CartContext";
 import styles from "./styles.module.css";
 import Categories from "../Categories";
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  images: string[];
+}
+
 const DetailCart: React.FC = () => {
   const { cartItems, decreaseQuantity, addToCart, removeFromCart } = useCartContext();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // Fetch the product data from the API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://api.escuelajs.co/api/v1/products");
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const getTotalPrice = () => {
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -21,7 +50,6 @@ const DetailCart: React.FC = () => {
             <div className={styles.emptyCart}>
               <img src="/bolsa3.png" alt="Empty Cart" className={styles.logo} />
               <h2>Your cart is empty.</h2>
-              {/* Aplica la clase 'exploreButton' al componente Link */}
               <Link to="/products" className={styles.exploreButton}>
                 Explore Products
               </Link>
@@ -33,24 +61,49 @@ const DetailCart: React.FC = () => {
               <p>Total Price: $ {getTotalPrice()}</p>
             </div>
             <div className={styles.cardsContainer}>
-              {cartItems.map((item) => (
-                <div key={item.id} className={styles.card}>
-                  <h3>{item.title}</h3>
+              {cartItems.map((item) => {
+                // Find the product in the products array based on the item's id
+                const product = products.find((p) => p.id === item.id);
 
-                  <div className={styles.cardContent}>
-                    <p>Quantity: {item.quantity}</p>
-                    <p>Price: {item.price}</p>
+                return (
+                  <div key={item.id} className={styles.card}>
+                    {/* Render the image here */}
+                    {product && (
+                      <img src={product.images[0]} alt={product.title} className={styles.productImage} />
+                    )}
+
+                    <div className={styles.cardContent}>
+                      <h3>{item.title}</h3>
+                      <p>Quantity: {item.quantity}</p>
+                      <p>Price: {item.price}</p>
+                    </div>
+                    <div className={styles.subtotal}>
+                      Subtotal: ${item.price * item.quantity}
+                    </div>
+                    <div className={styles.buttonsContainerr}>
+                    
+                      <button
+                        className={`${styles.addButtones} buttones bttn`}
+                        onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
+                      >
+                        +
+                      </button>
+                      <button
+                        className={`${styles.subtractButtones} buttones bttn`}
+                        onClick={() => decreaseQuantity(item.id)}
+                      >
+                        -
+                    </button>
+                    <button
+                        className={`${styles.removeButtones} buttones bttn-dark`}
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                  <div className={styles.subtotal}>
-                    Subtotal: ${item.price * item.quantity}
-                  </div>
-                  <div className={styles.buttonsContainer}>
-                    <button onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}>+</button>
-                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                    <button onClick={() => removeFromCart(item.id)}>Remove</button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className={styles.total}>
               <p>Total Price: $ {getTotalPrice()}</p>
