@@ -1,3 +1,4 @@
+/* Styles for the navbar */
 .navbar {
   background-color: #000000;
   padding: 10px;
@@ -33,7 +34,7 @@
   filter: drop-shadow(0 0 2em #c37171);
 }
 
-ul {
+.ula {
   list-style: none;
   display: flex;
   justify-content: flex-end;
@@ -41,6 +42,22 @@ ul {
   margin-right: 20px;
   padding: 0;
   font-size: large;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: flex-start;
+}
+
+ul li {
+  margin: 0 0.75rem;
+}
+
+ul:hover a:hover {
+  color: #d20a0a;
+  box-shadow: 0 3px 0 0 currentColor;
 }
 
 li {
@@ -52,7 +69,10 @@ a {
   text-decoration: none;
 }
 
-.btnL {
+.btnL,
+.btnR,
+.logoutBtn,
+.dashboardBtn {
   /* Estilos para los botones de Register y Login */
   background-color: #11b27fc3;
   color: #fff;
@@ -66,12 +86,6 @@ a {
 .btnR {
   /* Estilos para los botones de Register y Login */
   background-color: #ff2a2abd;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .btnR:hover {
@@ -85,12 +99,12 @@ a {
 .logoutBtn {
   /* Estilos para el botón de Logout */
   background-color: #0000ff;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+
+.dashboardBtn {
+  /* Estilos para el botón de Dash */
+  background-color: #5900ff;
+  color: #f0f0f0;
 }
 
 .logoutBtn:hover {
@@ -123,12 +137,22 @@ a {
   li {
     margin: 10px 0;
   }
-}
 
-.bold {
-  font-weight: bold;
-}
+  /* Responsive styles for buttons */
+  .btnL,
+  .btnR,
+  .logoutBtn,
+  .dashboardBtn {
+    width: 100%;
+  }
 
-.red {
-  color: red;
+  /* Adjust cart styles for responsiveness */
+  .ula {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ula li {
+    margin: 5px 0;
+  }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from 'react-query';
 import Error from '../../components/Error';
 import styles from './styles.module.css';
@@ -57,12 +57,14 @@ const ProductsByCategory: React.FC = () => {
           <CardList>
             {currentProducts.map((product) => (
               <div key={product.id} className={styles.categoryCard}>
+                <Link to={`/product/${product.id}`} className={styles.productLink}>
                 <CardChildren
                   image={product.images[0]}
                   title={product.title}
                   price={product.price}
                   description={product.description}
                 />
+                </Link>
               </div>
             ))}
           </CardList>

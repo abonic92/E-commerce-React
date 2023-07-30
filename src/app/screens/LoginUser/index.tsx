@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
-import { LoginUserProps } from "../Interface";
+import { LoginUserProps, UserData } from "../Interface";
 
-
-
-const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn, setUserName }) => {
+const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +19,23 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn, setUserName }) => {
     setPassword(e.target.value);
   };
 
-  const handleLogin = async () => {
-    setLoading(true);
-    try {
+  const fetchUserData = async (accessToken: string): Promise<UserData> => {
+    const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data");
+    }
+
+    const userData = await response.json();
+    return userData;
+  };
+
+  const loginMutation = useMutation<string, Error>(
+    async () => {
       const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
         method: "POST",
         headers: {
@@ -42,30 +53,43 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn, setUserName }) => {
       }
 
       const data = await response.json();
-      localStorage.setItem("accessToken", data.access_token);
-      setLoggedIn(true);
-      setUserName(data.name);
+      const { access_token } = data;
+      return access_token;
+    },
+    {
+      onSuccess: async (data) => {
+        localStorage.setItem("accessToken", data);
+        try {
+          const userData = await fetchUserData(data);
 
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        navigate("/");
-      }
-    } catch (error) {
-      setError(error.message || "Login failed");
-    } finally {
-      setLoading(false);
+          // Guardar los datos del usuario en el localStorage
+          localStorage.setItem("userData", JSON.stringify(userData));
+
+          // Actualizar el estado loggedIn a true
+          setLoggedIn(true);
+
+          // Redirigir al usuario a la página principal
+          navigate("/");
+        } catch (error) {
+          setError(error.message || "Failed to fetch user data");
+        }
+      },
     }
+  );
+
+  const handleLogin = () => {
+    loginMutation.mutate();
   };
 
   return (
     <div className={styles.container}>
       <h2>Login</h2>
-      {loading ? (
+      {loginMutation.isLoading ? (
         <Loader />
       ) : (
         <>
-          {error && <ErrorMessage message={error} />}
-          {!error && (
+          {loginMutation.isError && <ErrorMessage message={loginMutation.error?.message || "Login failed"} />}
+          {!loginMutation.isError && (
             <form className={styles.form}>
               <div className={styles.inputContainer}>
                 <label className={styles.inputLabel}>Email</label>

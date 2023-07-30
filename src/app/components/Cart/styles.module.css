@@ -1,0 +1,24 @@
+.cart {
+  display: flex;
+  align-items: flex-start; /* Alinear los elementos al inicio del eje transversal (vertical) */
+}
+
+.cartIcon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.cartDetails {
+  display: flex;
+  flex-direction: column; /* Organizar el total y los items en una columna */
+}
+
+.cartTotal {
+  font-weight: bold;
+  color: rgb(75, 25, 255);
+}
+
+.cartItemsCount {
+  font-size: 15px;
+  color:  rgb(75, 25, 255);
+}
