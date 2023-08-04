@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCartContext } from "../../hooks/CartContext";
 import styles from "./styles.module.css";
-import Categories from "../Categories";
 
 interface Product {
   id: number;
@@ -41,6 +40,18 @@ const DetailCart: React.FC = () => {
     return totalPrice;
   };
 
+  const handleFinishPurchase = () => {
+    // Add logic to handle finishing the purchase
+    // For example, redirect to a checkout page or display a confirmation message
+    console.log("Finishing the purchase...");
+  };
+
+  const handleContinueShopping = () => {
+    // Add logic to handle continuing shopping
+    // For example, redirect to the products page or display a message
+    console.log("Continuing shopping...");
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -66,8 +77,8 @@ const DetailCart: React.FC = () => {
                 const product = products.find((p) => p.id === item.id);
 
                 return (
+                  <div className={styles.contenedorGral}>
                   <div key={item.id} className={styles.card}>
-                    {/* Render the image here */}
                     {product && (
                       <img src={product.images[0]} alt={product.title} className={styles.productImage} />
                     )}
@@ -80,7 +91,7 @@ const DetailCart: React.FC = () => {
                     <div className={styles.subtotal}>
                       Subtotal: ${item.price * item.quantity}
                     </div>
-                    <div className={styles.buttonsContainerr}>
+                    <div className={styles.buttonsContainer}>
                       <button
                         className={`${styles.addButtones} buttones bttn`}
                         onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
@@ -100,10 +111,21 @@ const DetailCart: React.FC = () => {
                         Remove
                       </button>
                     </div>
+                    </div>
                   </div>
                 );
               })}
+               <div className={styles.checkoutContainer}>
+            
+              <Link to="/products" className={styles.exploreButton}>
+                Finalizar Compra
+              </Link>
+              <Link to="/products" className={styles.exploreButton}>
+                Seguir comprando
+              </Link>
             </div>
+            </div>
+           
             <div className={styles.total}>
               <p>Total Price: $ {getTotalPrice()}</p>
             </div>

@@ -10,7 +10,7 @@ const DetailProduct: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
 
   const { product, isLoading, error } = useProductByID(Number(productId));
-  const { addToCart, totalQuantity } = useCartContext();
+  const { addToCart } = useCartContext();
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -25,21 +25,11 @@ const DetailProduct: React.FC = () => {
     setSelectedImage(imageUrl);
   };
 
-  const handleIncreaseQuantity = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const handleDecreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
 
   const handleAddToCart = () => {
     if (product) {
-      const subtotal = product.price * quantity;
-      addToCart({ ...product, quantity, subtotal });
-      setQuantity(1); // Reset quantity to 1 after adding to cart
+      addToCart({ ...product, quantity });
+      setQuantity(1); 
     }
   };
 
@@ -54,8 +44,6 @@ const DetailProduct: React.FC = () => {
   if (!product) {
     return <ErrorMessage message="Product not found" />;
   }
-
-  const categoryId = product.category.id.toString();
 
   return (
     <>
@@ -90,18 +78,7 @@ const DetailProduct: React.FC = () => {
             <p className={styles.productPrice}>Price: {product.price}</p>
             <p className={styles.productDescription}>Description: {product.description}</p>
 
-            <div className={styles.quantityControls}>
-              <button onClick={handleDecreaseQuantity}>-</button>
-              <span className={styles.quantity}>{quantity}</span>
-              <button onClick={handleIncreaseQuantity}>+</button>
-            </div>
-
-            <div className={styles.subtotal}>
-              Subtotal: ${product.price * quantity}
-            </div>
-
-            {/* Total Quantity display */}
-            <div className={styles.totalQuantity}>Total Quantity in Cart: {totalQuantity}</div>
+            
 
             <button onClick={handleAddToCart} className={styles.addToCartButton}>
               Add to Cart

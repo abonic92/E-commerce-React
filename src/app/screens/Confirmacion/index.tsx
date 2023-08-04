@@ -1,28 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./styles.module.css";
 
-interface CheckoutProps {
-  totalPrice: number;
-  totalItems: number;
-  onConfirmPurchase: () => void;
-  onCancelPurchase: () => void;
-}
 
-const Checkout: React.FC<CheckoutProps> = ({
-  totalPrice,
-  totalItems,
-  onConfirmPurchase,
-  onCancelPurchase,
-}) => {
+const CompraExitosa: React.FC = () => {
   return (
     <div>
-      <h1>Checkout</h1>
-      <p>Total Price: ${totalPrice}</p>
-      <p>Total Items: {totalItems}</p>
-      <button onClick={onConfirmPurchase}>Confirm</button>
-      <button onClick={onCancelPurchase}>Cancel</button>
+      <h2>¡Compra realizada con éxito!</h2>
+      <p>Gracias por tu compra.</p>
+      <Link to="/">Volver a la página principal</Link>
     </div>
   );
 };
 
-export default Checkout;
+export default CompraExitosa;
