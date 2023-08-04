@@ -77,55 +77,51 @@ const DetailCart: React.FC = () => {
                 const product = products.find((p) => p.id === item.id);
 
                 return (
-                  <div className={styles.contenedorGral}>
-                  <div key={item.id} className={styles.card}>
-                    {product && (
-                      <img src={product.images[0]} alt={product.title} className={styles.productImage} />
-                    )}
+                  <div className={styles.contenedorGral} key={item.id}>
+                    <div className={styles.card}>
+                      {product && (
+                        <img src={product.images[0]} alt={product.title} className={styles.productImage} />
+                      )}
 
-                    <div className={styles.cardContent}>
-                      <h3>{item.title}</h3>
-                      <p>Quantity: {item.quantity}</p>
-                      <p>Price: {item.price}</p>
-                    </div>
-                    <div className={styles.subtotal}>
-                      Subtotal: ${item.price * item.quantity}
-                    </div>
-                    <div className={styles.buttonsContainer}>
-                      <button
-                        className={`${styles.addButtones} buttones bttn`}
-                        onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
-                      >
-                        +
-                      </button>
-                      <button
-                        className={`${styles.subtractButtones} buttones bttn`}
-                        onClick={() => decreaseQuantity(item.id)}
-                      >
-                        -
-                      </button>
-                      <button
-                        className={`${styles.removeButtones} buttones bttn-dark`}
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        Remove
-                      </button>
-                    </div>
+                      <div className={styles.cardContent}>
+                        <h3>{item.title}</h3>
+                        <p>Quantity: {item.quantity}</p>
+                        <p>Price: {item.price}</p>
+                      </div>
+                      <div className={styles.subtotal}>Subtotal: ${item.price * item.quantity}</div>
+                      <div className={styles.buttonsContainer}>
+                        <button
+                          className={`${styles.addButtones} buttones bttn`}
+                          onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
+                        >
+                          +
+                        </button>
+                        <button
+                          className={`${styles.subtractButtones} buttones bttn`}
+                          onClick={() => decreaseQuantity(item.id)}
+                        >
+                          -
+                        </button>
+                        <button
+                          className={`${styles.removeButtones} buttones bttn-dark`}
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               })}
-               <div className={styles.checkoutContainer}>
-            
-              <Link to="/products" className={styles.exploreButton}>
-                Finalizar Compra
-              </Link>
-              <Link to="/products" className={styles.exploreButton}>
-                Seguir comprando
-              </Link>
+              <div className={styles.checkoutContainer}>
+                <Link to="/checkout" className={styles.exploreButton}>
+                  Finalizar Compra
+                </Link>
+                <Link to="/products" className={styles.exploreButton}>
+                  Seguir comprando
+                </Link>
+              </div>
             </div>
-            </div>
-           
             <div className={styles.total}>
               <p>Total Price: $ {getTotalPrice()}</p>
             </div>
