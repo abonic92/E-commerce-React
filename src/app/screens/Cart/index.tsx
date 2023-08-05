@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCartContext } from "../../hooks/CartContext"; // Importar el contexto CartContext
 import styles from "./styles.module.css";
 
@@ -17,13 +17,13 @@ interface Product {
 }
 
 const DetailCart: React.FC = () => {
-  const { cartItems, decreaseQuantity, addToCart, removeFromCart } = useCartContext();
+  const { cartItems, decreaseQuantity, addToCart, removeFromCart,clearCart } = useCartContext();
   const [products, setProducts] = useState<Product[]>([]);
 
+  const navigate=useNavigate();
   const handleFinishPurchase = () => {
     clearCart();
-    return <Navigate to="/confirmacion" />;
-    
+    navigate("/confirmacion")
   };
 
  
@@ -124,7 +124,5 @@ const DetailCart: React.FC = () => {
 };
 
 export default DetailCart;
-function clearCart() {
-  throw new Error("Function not implemented.");
-}
+
 

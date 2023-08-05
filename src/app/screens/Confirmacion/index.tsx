@@ -8,7 +8,8 @@ const Confirmacion: React.FC = () => {
     <div>
       <h2>¡Compra realizada con éxito!</h2>
       <p>Gracias por tu compra.</p>
-      <Link to="/">Volver a la página principal</Link>
+
+      <Link to="/"><span className={styles.exploreButton}> Volver a la página principal </span> </Link>
     </div>
     
   );
