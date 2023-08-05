@@ -20,6 +20,7 @@ import EditProduct from "./screens/EditProduct";
 import CartProvider from './hooks/CartContext';
 import DetailProduct from './screens/DetailProduct.tsx';
 import DetailCart from './screens/Cart/index.tsx';
+import Confirmacion from "./screens/Confirmacion/index.tsx";
 
 
 
@@ -58,6 +59,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/:productId" element={<DetailProduct />} />
             <Route path="/cart/detail" element={<DetailCart />} />
+            <Route path="/confirmacion/" element={<Confirmacion />} />
 
             <Route
               path="/adminpage"
