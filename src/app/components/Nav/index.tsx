@@ -2,13 +2,13 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import { UserData } from "../../screens/Interface";
-import { AdminRoute } from "../AdminRoute";
 import Cart from "../Cart";
 import { useCartContext } from "../../hooks/CartContext";
 
 interface NavProps {
   loggedIn: boolean;
   handleLogout: () => void;
+  
 }
 
 const Nav: React.FC<NavProps> = ({ loggedIn, handleLogout }) => {

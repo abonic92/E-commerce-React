@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
 import styles from "./styles.module.css";
-import { LoginUserProps, UserData } from "../Interface";
+import useLoginMutation from "../../hooks/useLoginMutation";
+
+interface LoginUserProps {
+  setLoggedIn: (loggedIn: boolean) => void;
+}
 
 const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,67 +23,27 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
     setPassword(e.target.value);
   };
 
-  const fetchUserData = async (accessToken: string): Promise<UserData> => {
-    const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const loginMutation = useLoginMutation(); // Use the useLoginMutation hook here
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch user data");
+  const handleLogin = async () => {
+    try {
+      const credentials = { email, password };
+      await loginMutation.mutateAsync(credentials); // Get the user data from the loginMutation
+
+      setLoggedIn(true);
+      navigate("/");
+    } catch (error: unknown)  {
+      setError((error as Error).message || 'login failed');
     }
-
-    const userData = await response.json();
-    return userData;
   };
 
-  const loginMutation = useMutation<string, Error>(
-    async () => {
-      const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+  if (loginMutation.isLoading) {
+    return <Loader />;
+  }
 
-      if (!response.ok) {
-        const errorMessage = "Failed to login";
-        throw new Error(errorMessage);
-      }
-
-      const data = await response.json();
-      const { access_token } = data;
-      return access_token;
-    },
-    {
-      onSuccess: async (data) => {
-        localStorage.setItem("accessToken", data);
-        try {
-          const userData = await fetchUserData(data);
-
-          // Guardar los datos del usuario en el localStorage
-          localStorage.setItem("userData", JSON.stringify(userData));
-
-          // Actualizar el estado loggedIn a true
-          setLoggedIn(true);
-
-          // Redirigir al usuario a la página principal
-          navigate("/");
-        } catch (error) {
-          setError(error.message || "Failed to fetch user data");
-        }
-      },
-    }
-  );
-
-  const handleLogin = () => {
-    loginMutation.mutate();
-  };
+  if (loginMutation.error) {
+    return <ErrorMessage message={error || "Failed to fetch user data"} />;
+  }
 
   return (
     <div className={styles.container}>
@@ -88,22 +52,20 @@ const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
         <Loader />
       ) : (
         <>
-          {loginMutation.isError && <ErrorMessage message={loginMutation.error?.message || "Login failed"} />}
-          {!loginMutation.isError && (
-            <form className={styles.form}>
-              <div className={styles.inputContainer}>
-                <label className={styles.inputLabel}>Email</label>
-                <input className={styles.input} type="email" value={email} onChange={handleEmailChange} />
-              </div>
-              <div className={styles.inputContainer}>
-                <label className={styles.inputLabel}>Password</label>
-                <input className={styles.input} type="password" value={password} onChange={handlePasswordChange} />
-              </div>
-              <button className={styles.button} type="button" onClick={handleLogin}>
-                Login
-              </button>
-            </form>
-          )}
+          {error && <ErrorMessage message={error} />}
+          <form className={styles.form}>
+            <div className={styles.inputContainer}>
+              <label className={styles.inputLabel}>Email</label>
+              <input className={styles.input} type="email" value={email} onChange={handleEmailChange} />
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.inputLabel}>Password</label>
+              <input className={styles.input} type="password" value={password} onChange={handlePasswordChange} />
+            </div>
+            <button className={styles.button} type="button" onClick={handleLogin}>
+              Login
+            </button>
+          </form>
         </>
       )}
     </div>

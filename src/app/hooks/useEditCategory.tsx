@@ -1,41 +1,52 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
 
-interface Category {
-  id: number;
-  name?: string;
-  image?: string;
+interface UseUpdateCategoryProps {
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
 }
+export const queryClient = new QueryClient();
 
-const useUpdateCategoryMutation = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+function useEditCategory({ setError, setSuccess }: UseUpdateCategoryProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
-  const updateCategoryMutation = (categoryId: number, data: Category) => {
-    return fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
+  const updateCategoryMutation = useMutation(
+    async (data: { id: number; name?: string; image?: string }) => {
+      setIsLoading(true);
+      try {
+        const { id, ...updateData } = data;
+
+        const res = await fetch(`https://api.escuelajs.co/api/v1/categories/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        });
+
         if (!res.ok) {
           setError(res.statusText);
           throw new Error(res.statusText);
         }
-        return res.json();
-      })
-      .then((resData) => {
-        setSuccess('Category updated successfully');
-        // Here you can handle the server response
-        console.log(resData);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
+
+        setSuccess("Category updated successfully");
+        return await res.json();
+      } catch (error:unknown) {
+        setError((error as Error).message); 
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  );
+
+  const handleSuccess = () => {
+    queryClient.invalidateQueries("categories");
+    setSuccess("Category updated successfully");
   };
 
-  return { updateCategoryMutation, error, success };
-};
+  return { updateCategoryMutation, isLoading, handleSuccess };
+}
 
-export default useUpdateCategoryMutation;
+export default useEditCategory;

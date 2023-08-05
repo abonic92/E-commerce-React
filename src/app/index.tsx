@@ -9,7 +9,7 @@ import Products from "./screens/Products";
 import Login from "./screens/LoginUser";
 import Register from "./screens/RegisterUser";
 import { useState } from "react";
-import { PrivateRoute } from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 import { AdminRoute } from './components/AdminRoute';
 import CreateCategoryForm from "./screens/CreateCategory";

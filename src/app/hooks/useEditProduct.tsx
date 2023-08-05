@@ -1,33 +1,51 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useMutation } from "react-query";
 
-const useEditProduct = () => {
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+interface UseUpdateProductProps {
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const editProductMutation = async (productId: any, data: any) => {
-    try {
-      const response = await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+function useEditProduct({ setError, setSuccess }: UseUpdateProductProps) {
+  const [isLoading, setIsLoading] = useState(false);
 
-      if (!response.ok) {
-        setError('Error updating product');
-        throw new Error(response.statusText);
+  const updateProductMutation = useMutation(
+    async (data: {
+      id: number;
+      title?: string;
+      price?: number;
+      description?: string;
+      images?: string[];
+    }) => {
+      setIsLoading(true);
+      try {
+        const { id, ...updateData } = data;
+
+        const res = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        });
+
+        if (!res.ok) {
+          setError(res.statusText);
+          throw new Error(res.statusText);
+        }
+
+        setSuccess("Product updated successfully");
+        return await res.json();
+      } catch (error: unknown) { 
+        setError((error as Error).message); 
+        throw error;
+      } finally {
+        setIsLoading(false);
       }
-
-      const updatedProduct = await response.json();
-      setSuccess('Product updated successfully');
-      console.log(updatedProduct);
-    } catch (error) {
-      setError(error.message);
     }
-  };
+  );
 
-  return { error, success, editProductMutation };
-};
+  return { updateProductMutation, isLoading };
+}
 
 export default useEditProduct;

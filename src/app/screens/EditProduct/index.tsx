@@ -42,12 +42,15 @@ const ProductAdmin: React.FC = () => {
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductImages, setNewProductImages] = useState<string[]>([]);
 
-  const { error: editError, success, editProductMutation, isLoading: isUpdating, handleSuccess } =
-    useEditProduct(); // Utiliza el nuevo hook de edición de productos
-
-  const { deleteProductMutation } = useDeleteProduct({
+  const { updateProductMutation, isLoading: isUpdating } =
+  useEditProduct({
     setError: console.error,
+    setSuccess: () => setIsModalOpen(false),
   });
+
+const { deleteProductMutation } = useDeleteProduct({
+  setError: console.error,
+});
 
   const queryClient = useQueryClient();
 
@@ -65,30 +68,19 @@ const ProductAdmin: React.FC = () => {
     setImageURLs(newProductImages);
   }, [newProductImages]);
 
-  const handleAddImageURL = () => {
-    setImageURLs([...imageURLs, ""]);
-  };
-
-  const handleRemoveImageURL = (index: number) => {
-    const updatedImageURLs = [...imageURLs];
-    updatedImageURLs.splice(index, 1);
-    setImageURLs(updatedImageURLs);
-  };
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   const handleDeleteProduct = async (productId: number) => {
     try {
-      // Realiza la solicitud de eliminación utilizando el método fetch
-      await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`, {
-        method: "DELETE",
-      });
+      await deleteProductMutation.mutateAsync(productId);
       queryClient.invalidateQueries("products");
     } catch (error) {
       console.error("Error deleting product:", error);
     }
   };
+
 
   const handleConfirmation = () => {
     if (productToDelete) {
@@ -116,12 +108,15 @@ const ProductAdmin: React.FC = () => {
     ) {
       const { id } = editingProduct;
       try {
-        await editProductMutation(id, {
+        await updateProductMutation.mutateAsync({
+          id,
           title: newProductTitle,
           price: parseFloat(newProductPrice),
           description: newProductDescription,
           images: imageURLs,
         });
+        queryClient.invalidateQueries("products");
+
       } catch (error) {
         console.error("Error updating product:", error);
       }
@@ -135,7 +130,7 @@ const ProductAdmin: React.FC = () => {
   }
 
   if (error) {
-    return <ErrorMessage message={error.message} />;
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   return (
