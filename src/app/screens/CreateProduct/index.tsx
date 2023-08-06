@@ -19,7 +19,7 @@ const CreateProduct: React.FC = () => {
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const createProductMutation = useCreateProduct(setError, setSuccess);
+  const createProductMutation = useCreateProduct(setError);
 
   const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useCategories();
 
@@ -49,31 +49,23 @@ const CreateProduct: React.FC = () => {
     setImageURLs(updatedImageURLs);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const productData = {
       title,
       price,
-      description: description.trim() || undefined,
+      description,
       categoryId,
-      images: imageURLs.filter((url) => url.trim() !== ""),
+      images: imageURLs.filter((url) => url !== ""),
     };
 
-    createProductMutation.mutate(productData, {
-      onSuccess: () => {
-        setSuccess("Product created successfully");
-        setTitle("");
-        setPrice(0);
-        setDescription("");
-        setCategoryId(0);
-        setImageURLs([]);
-        setError("");
-      },
-      onError: (error) => {
-        setError(error.message);
-      }
-    });
+    try {
+      createProductMutation.mutate(productData);
+      setSuccess("Product created successfully");
+    } catch (error) {
+      setError("Failed to create product");
+    }
   };
 
   if (isLoadingCategories) {
@@ -129,11 +121,11 @@ const CreateProduct: React.FC = () => {
                   value={categoryId}
                   onChange={handleCategoryChange}
                 >
-                  {categories.map((category: Category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
+                  {categories && categories.map((category: Category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
                 </select>
               </div>
               <div>

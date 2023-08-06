@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Error";
@@ -6,7 +6,8 @@ import styles from "./styles.module.css";
 import useLoginMutation from "../../hooks/useLoginMutation";
 
 interface LoginUserProps {
-  setLoggedIn: (loggedIn: boolean) => void;
+  setLoggedIn: (loggedIn: boolean | ((prevState: boolean) => boolean)) => void;
+  setUserName: Dispatch<SetStateAction<string>>;
 }
 
 const LoginUser: React.FC<LoginUserProps> = ({ setLoggedIn }) => {
