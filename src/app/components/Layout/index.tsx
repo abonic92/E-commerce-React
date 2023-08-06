@@ -7,10 +7,10 @@ interface LayoutProps {
   handleLogout: () => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ loggedIn, userName, handleLogout }) => {
+const Layout: React.FC<LayoutProps> = ({ loggedIn,  handleLogout }) => {
   return (
     <>
-      <Nav loggedIn={loggedIn} userName={userName} handleLogout={handleLogout} />
+      <Nav loggedIn={loggedIn}  handleLogout={handleLogout} />
       <Outlet />
     </>
   );

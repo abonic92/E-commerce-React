@@ -6,11 +6,11 @@ import ErrorMessage from "../../components/Error";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import useCategories from "../../hooks/useCategories";
-import useUpdateCategory from "../../hooks/useUpdateCategory";
 import { useQueryClient } from "react-query";
 import useDeleteCategory from "../../hooks/useDeleteCategory";
 import Dash from "../../components/Dash";
 import EditModal from "../../components/Modal/editModal";
+import useEditCategory from "../../hooks/useEditCategory";
 
 interface Category {
   id: number;
@@ -26,7 +26,7 @@ const EditCategory: React.FC = () => {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryImage, setNewCategoryImage] = useState("");
 
-  const { updateCategoryMutation, isLoading: isUpdating, handleSuccess } = useUpdateCategory({
+  const { updateCategoryMutation, isLoading: isUpdating, handleSuccess } = useEditCategory({
     setError: console.error,
     setSuccess: () => setIsModalOpen(false),
   });

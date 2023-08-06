@@ -13,7 +13,7 @@ interface CustomModalProps {
   children: ReactNode;
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, children }) => {
+const CustomModal: React.FC<CustomModalProps> = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return (

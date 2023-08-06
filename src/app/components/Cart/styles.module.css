@@ -1,6 +1,6 @@
 .cart {
   display: flex;
-  align-items: flex-start; /* Alinear los elementos al inicio del eje transversal (vertical) */
+  align-items: flex-start; 
 }
 
 .cartIcon {
@@ -10,7 +10,7 @@
 
 .cartDetails {
   display: flex;
-  flex-direction: column; /* Organizar el total y los items en una columna */
+  flex-direction: column; 
 }
 
 .cartTotal {

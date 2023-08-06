@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
 function useDeleteProduct({ setError }: { setError: React.Dispatch<React.SetStateAction<string>> }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +18,8 @@ function useDeleteProduct({ setError }: { setError: React.Dispatch<React.SetStat
         }
 
         return await res.json();
-      } catch (error) {
-        setError(error.message);
+      } catch (error:unknown) {
+        setError((error as Error).message); 
         throw error;
       } finally {
         setIsLoading(false);

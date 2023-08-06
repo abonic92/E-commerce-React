@@ -18,8 +18,6 @@ function useDeleteCategory({ setError }: UseDeleteCategoryProps) {
         setError(res.statusText);
         throw new Error(res.statusText);
       }
-
-      // Aquí se espera que la API responda con un booleano que indique si la eliminación fue exitosa.
       return await res.json();
     }
   );

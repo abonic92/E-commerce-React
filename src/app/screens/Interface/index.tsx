@@ -41,5 +41,8 @@
   }
 
   
-  export { Category, Product, LoginUserProps, RouteParams, UserData };
-  
+  export type { Category };
+  export type { Product }; 
+  export type { LoginUserProps };
+  export type { UserData };
+  export type { RouteParams };

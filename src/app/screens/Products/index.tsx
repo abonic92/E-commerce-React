@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Loader from "../../components/Loader";
-import Error from "../../components/Error";
+import CustomError from "../../components/Error"; // Renombramos el componente importado para evitar conflicto de nombres
 import styles from "./styles.module.css";
 import CardList from "../../components/CardList";
 import CardChildren from "../../components/CardChildren";
 import { Category, Product } from "../Interface";
 import { Link } from "react-router-dom";
 
-
 const fetchCategories = async () => {
   const response = await fetch("https://api.escuelajs.co/api/v1/categories");
   if (!response.ok) {
     const errorMessage = "Failed to fetch categories";
-    throw new Error(errorMessage);
+    throw new window.Error(errorMessage); // Utilizamos el alias "window.Error"
   }
   const data = await response.json();
   return data as Category[];
@@ -23,7 +22,7 @@ const fetchProducts = async (query: string) => {
   const response = await fetch(`https://api.escuelajs.co/api/v1/products${query}`);
   if (!response.ok) {
     const errorMessage = "Failed to fetch products";
-    throw new Error(errorMessage);
+    throw new window.Error(errorMessage); // Utilizamos el alias "window.Error"
   }
   const data = await response.json();
   return data as Product[];
@@ -65,13 +64,13 @@ const Products: React.FC = () => {
     setFilteredProductsQuery("");
   };
 
-  const { data: categoriesData, isLoading: isLoadingCategories, error: categoriesError } = useQuery<Category[]>(
+  const { isLoading: isLoadingCategories, error: categoriesError } = useQuery<Category[]>(
     "categories",
     fetchCategories,
     {
       onSuccess: (data) => {
         setCategories(data);
-      }
+      },
     }
   );
 
@@ -86,9 +85,10 @@ const Products: React.FC = () => {
     return <Loader />;
   }
 
-  if (categoriesError || productsError) {
-    return <Error message={(categoriesError || productsError).message} />;
+  if ((categoriesError as Error)?.message || (productsError as Error)?.message) {
+    return <CustomError message={(categoriesError as Error || productsError as Error)?.message} />;
   }
+
 
   const filteredProducts = productsData || [];
 
@@ -139,18 +139,17 @@ const Products: React.FC = () => {
 
       <div className={styles.productList}>
         <h2>Product List</h2>
-        
         {filteredProducts.length > 0 ? (
           <CardList>
             {filteredProducts.map((product) => (
               <div key={product.id} className={styles.productCard}>
                 <Link to={`/product/${product.id}`} className={styles.productLink}>
-                <CardChildren
-                  image={product.images[0]}
-                  title={product.title}
-                  price={product.price}
-                  description={product.description}
-                />
+                  <CardChildren
+                    image={product.images[0]}
+                    title={product.title}
+                    price={product.price}
+                    description={product.description}
+                  />
                 </Link>
               </div>
             ))}

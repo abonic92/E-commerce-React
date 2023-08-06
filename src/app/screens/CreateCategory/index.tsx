@@ -25,12 +25,7 @@ const CreateCategory: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    createCategoryMutation.mutate({ name, image }).then(() => {
-      setSuccess("Category created successfully");
-      setName("");
-      setImage("");
-      setError("");
-    });
+    createCategoryMutation.mutate({ name, image });
   };
 
 

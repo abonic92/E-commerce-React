@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface Product {
   id: number;
@@ -28,37 +28,45 @@ export const useCartContext = () => {
 const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
+  useEffect(() => {
+    const savedCartItems = localStorage.getItem("cartItems");
+    if (savedCartItems) {
+      setCartItems(JSON.parse(savedCartItems));
+    }
+  }, []);
+
+  const updateCart = (newCartItems: Product[]) => {
+    setCartItems(newCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+  };
+
   const addToCart = (product: Product) => {
     const existingProduct = cartItems.find((item) => item.id === product.id);
     if (existingProduct) {
-      setCartItems((prevCartItems) =>
-        prevCartItems.map((item) =>
-          item.id === existingProduct.id ? { ...item, quantity: item.quantity + 1 } : item
-        )
+      const updatedCartItems = cartItems.map((item) =>
+        item.id === existingProduct.id ? { ...item, quantity: item.quantity + 1 } : item
       );
+      updateCart(updatedCartItems);
     } else {
-      setCartItems((prevCartItems) => [...prevCartItems, { ...product, quantity: 1 }]);
+      const updatedCartItems = [...cartItems, { ...product, quantity: 1 }];
+      updateCart(updatedCartItems);
     }
   };
 
   const removeFromCart = (productId: number) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.filter((item) => item.id !== productId)
-    );
+    const updatedCartItems = cartItems.filter((item) => item.id !== productId);
+    updateCart(updatedCartItems);
   };
 
   const decreaseQuantity = (productId: number) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((item) =>
-        item.id === productId
-          ? { ...item, quantity: Math.max(item.quantity - 1, 0) } 
-          : item
-      ).filter((item) => item.quantity > 0) 
-    );
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === productId ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+    ).filter((item) => item.quantity > 0);
+    updateCart(updatedCartItems);
   };
 
   const clearCart = () => {
-    setCartItems([]);
+    updateCart([]);
   };
 
   const cartContextValue: CartContextValue = {

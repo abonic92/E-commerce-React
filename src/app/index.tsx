@@ -9,7 +9,7 @@ import Products from "./screens/Products";
 import Login from "./screens/LoginUser";
 import Register from "./screens/RegisterUser";
 import { useState } from "react";
-import { PrivateRoute } from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 import { AdminRoute } from './components/AdminRoute';
 import CreateCategoryForm from "./screens/CreateCategory";
@@ -20,6 +20,8 @@ import EditProduct from "./screens/EditProduct";
 import CartProvider from './hooks/CartContext';
 import DetailProduct from './screens/DetailProduct.tsx';
 import DetailCart from './screens/Cart/index.tsx';
+import Confirmacion from "./screens/Confirmacion/index.tsx";
+
 
 
 const queryClient = new QueryClient();
@@ -34,9 +36,11 @@ function App() {
     localStorage.setItem('loggedIn', loggedIn ? 'true' : 'false');
   };
   
+
   const handleLogout = () => {
     setLoggedIn(false);
     // setUserName("");
+    
     localStorage.removeItem("loggedIn"); // cerrar sesión
     localStorage.removeItem("accessToken"); // Remueve el token del local storage al cerrar sesión
     localStorage.removeItem("userData"); //Remueve los datos del usuario
@@ -55,6 +59,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/:productId" element={<DetailProduct />} />
             <Route path="/cart/detail" element={<DetailCart />} />
+            <Route path="/confirmacion/" element={<Confirmacion />} />
 
             <Route
               path="/adminpage"
