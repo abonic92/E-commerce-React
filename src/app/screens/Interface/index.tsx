@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 
   
   interface Category{
@@ -28,8 +29,8 @@
 
 
   interface LoginUserProps {
-    setLoggedIn: (loggedIn: boolean) => void;
-    setUserName: (userName: string) => void;
+    setLoggedIn: (loggedIn: boolean | ((prevState: boolean) => boolean)) => void;
+    setUserName: Dispatch<SetStateAction<string>>;
   }
 
 
