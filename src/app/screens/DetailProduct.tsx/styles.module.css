@@ -151,7 +151,7 @@
   transition: width 350ms ease-in-out;
   width: 70%;
 }
-
+/* k */
 .addToCartButton:hover:before {
   bottom: auto;
   top: 0;
